@@ -16,7 +16,7 @@ proto:
 		$(PROTO_PATH)/*.proto
 
 docker:
-	@echo 'using registry ${REGISTRY}'
+	@echo 'using registry ${REGISTRY} with tag ${TAG}'
 
 	docker build -t ${REGISTRY}:${TAG} .
 	docker push ${REGISTRY}:${TAG} 
