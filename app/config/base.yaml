@@ -1,0 +1,21 @@
+develop: true
+debug: true
+server:
+  host: 127.0.0.0
+  port: 9090
+  jwtSecret: thisismysecretkey
+  allow_origins:
+    - "http://localhost:3000"
+
+
+pg:
+  driver: postgres
+  host: localhost
+  port: 5432
+  db_name: postgres
+  ssl: disable # or require
+  auth:
+    username: postgres
+    password: postgres
+
+    
