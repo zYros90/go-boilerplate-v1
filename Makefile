@@ -14,3 +14,9 @@ proto:
 		--go-errors_out=paths=source_relative:$(OUT_PATH) \
 		--validate_out=paths=source_relative,lang=go:$(OUT_PATH) \
 		$(PROTO_PATH)/*.proto
+
+docker:
+	@echo 'using registry ${REGISTRY}'
+
+	docker build -t ${REGISTRY}:${TAG} .
+	docker push ${REGISTRY}:${TAG} 
