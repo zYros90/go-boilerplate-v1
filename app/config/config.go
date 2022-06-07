@@ -39,17 +39,17 @@ func NewConfig() *Config {
 }
 
 func ReadConfig(
-	c *Config,
 	basePath string,
 	overwritePath string,
-) error {
+) (*Config, error) {
+	conf := new(Config)
 	viper.SetConfigFile(basePath)
 	err := viper.ReadInConfig()
 	if err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			return errors.Wrap(err, "couldn't find base config: "+basePath)
+			return nil, errors.Wrap(err, "couldn't find base config: "+basePath)
 		} else {
-			return errors.Wrap(err, "error reading base config: "+basePath)
+			return nil, errors.Wrap(err, "error reading base config: "+basePath)
 		}
 	}
 
@@ -59,16 +59,16 @@ func ReadConfig(
 		err := viper.MergeInConfig()
 		if err != nil {
 			if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-				return errors.Wrap(err, "couldn't find merge config: "+basePath)
+				return nil, errors.Wrap(err, "couldn't find merge config: "+basePath)
 			} else {
-				return errors.Wrap(err, "error reading merge config: "+basePath)
+				return nil, errors.Wrap(err, "error reading merge config: "+basePath)
 			}
 		}
 	}
 
-	err = viper.Unmarshal(c)
+	err = viper.Unmarshal(conf)
 	if err != nil {
-		return errors.Wrap(err, "error unmarshalling config")
+		return nil, errors.Wrap(err, "error unmarshalling config")
 	}
-	return nil
+	return conf, nil
 }

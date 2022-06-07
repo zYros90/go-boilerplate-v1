@@ -1,18 +1,13 @@
 package cmd
 
 import (
-	"log"
-
-	"github.com/zYros90/go-boilerplate-v1/app/config"
-	"github.com/zYros90/pkg/logger"
-
 	"github.com/spf13/cobra"
 )
 
 var (
 	cfgFile      string
 	cfgMergeFile string
-	conf         *config.Config
+	testMode     bool
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -29,22 +24,8 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "app/config/base.yaml", "config file")
 	rootCmd.PersistentFlags().StringVar(&cfgMergeFile, "mergeconfig", "", "config to merge base config with")
+	rootCmd.PersistentFlags().BoolVar(&testMode, "testcmd", false, "test cobra cmds")
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-}
-
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	conf = config.NewConfig()
-	logger, err := logger.NewLogger("debug", true, false, false)
-	if err != nil {
-		log.Fatal("error creating new logger", err)
-	}
-
-	err = config.ReadConfig(conf, cfgFile, cfgMergeFile)
-	if err != nil {
-		logger.Sugar().Fatal(err)
-	}
 }

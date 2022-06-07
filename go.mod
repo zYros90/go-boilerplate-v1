@@ -9,7 +9,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.12.0
-	github.com/zYros90/pkg v0.0.0-20220606143602-98991ce710c9
+	github.com/zYros90/pkg v0.0.0-20220607154659-e36bdf3fec48
 	go.uber.org/zap v1.21.0
 	google.golang.org/protobuf v1.28.0
 )
