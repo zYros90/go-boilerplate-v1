@@ -20,3 +20,7 @@ docker:
 
 	docker build -t ${REGISTRY}:${TAG} .
 	docker push ${REGISTRY}:${TAG} 
+
+test:
+	go mod download
+	go test ./...
