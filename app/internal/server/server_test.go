@@ -67,7 +67,7 @@ func Test_newEcho(t *testing.T) {
 				err = got.Start(fmt.Sprintf(":%d", correctConfig.Server.Port))
 				if err != nil {
 					if time.Now().Before(notAcceptedEndTime) {
-						t.Errorf("newEcho() error = %v, wantStartErr %v", err, tt.wantStartErr)
+						t.Errorf("newEcho() error starting echo = %v", err)
 					}
 
 				}
