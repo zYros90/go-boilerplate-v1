@@ -1,11 +1,13 @@
 package server
 
 import (
-	"reflect"
+	"context"
+	"fmt"
 	"testing"
+	"time"
 
-	"github.com/labstack/echo/v4"
 	"github.com/zYros90/go-boilerplate-v1/app/config"
+	"github.com/zYros90/pkg/logger"
 	"go.uber.org/zap"
 )
 
@@ -14,13 +16,43 @@ func Test_newEcho(t *testing.T) {
 		config *config.Config
 		logger *zap.Logger
 	}
+	log, err := logger.NewLogger("debug", true, true, true)
+	if err != nil {
+		t.Error(err)
+	}
+
+	correctConfig := &config.Config{
+		Develop: true,
+		Debug:   true,
+		Server: config.Server{
+			Host:         "127.0.0.0",
+			Port:         9090,
+			JWTSecret:    "thisismysecretkey",
+			AllowOrigins: []string{"http://localhost:3000"},
+		},
+	}
+
 	tests := []struct {
 		name    string
 		args    args
-		want    *echo.Echo
 		wantErr bool
 	}{
-		// TODO: Add test cases.
+		{
+			"new echo",
+			args{
+				config: correctConfig,
+				logger: log.Logger,
+			},
+			false,
+		},
+		{
+			"new echo",
+			args{
+				config: correctConfig,
+				logger: log.Logger,
+			},
+			false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -29,8 +61,21 @@ func Test_newEcho(t *testing.T) {
 				t.Errorf("newEcho() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("newEcho() = %v, want %v", got, tt.want)
+
+			notAcceptedEndTime := time.Now().Add(1 * time.Second)
+			go func() {
+				err = got.Start(fmt.Sprintf(":%d", correctConfig.Server.Port))
+				if err != nil {
+					if time.Now().Before(notAcceptedEndTime) {
+						t.Errorf("newEcho() error = %v, wantStartErr %v", err, tt.wantStartErr)
+					}
+
+				}
+			}()
+			time.Sleep(2 * time.Second)
+			err = got.Shutdown(context.Background())
+			if err != nil {
+				t.Errorf("newEcho() shutdown echo %v", err)
 			}
 		})
 	}
