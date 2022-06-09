@@ -18,27 +18,27 @@ func TestRootExecute(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"root",
+			"root with --help flag",
 			[]string{"--help"},
 			false,
 		},
 		{
-			"root",
+			"root with -t flag",
 			[]string{"-t"},
 			false,
 		},
 		{
-			"root",
+			"root with --config flag",
 			[]string{"--config", filepath.Join(rootPath, "app/config/base.yaml")},
 			false,
 		},
 		{
-			"root",
+			"root with --mergeconfig flag",
 			[]string{"--mergeconfig", filepath.Join(rootPath, "app/config/dev.yaml")},
 			false,
 		},
 		{
-			"root",
+			"root with wrong flag",
 			[]string{"--randomflag", "xyz"},
 			true,
 		},
