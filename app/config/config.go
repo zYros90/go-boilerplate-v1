@@ -1,8 +1,6 @@
 package config
 
 import (
-	"fmt"
-
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 )
@@ -34,10 +32,6 @@ type Config struct {
 	PG      PG     `mapstructure:"pg"`
 }
 
-func NewConfig() *Config {
-	return &Config{}
-}
-
 func ReadConfig(
 	basePath string,
 	overwritePath string,
@@ -46,15 +40,10 @@ func ReadConfig(
 	viper.SetConfigFile(basePath)
 	err := viper.ReadInConfig()
 	if err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			return nil, errors.Wrap(err, "couldn't find base config: "+basePath)
-		} else {
-			return nil, errors.Wrap(err, "error reading base config: "+basePath)
-		}
+		return nil, errors.Wrap(err, "error reading base config: "+basePath)
 	}
 
 	if overwritePath != "" {
-		fmt.Println("overwriting config with ", overwritePath)
 		viper.SetConfigFile(overwritePath)
 		err := viper.MergeInConfig()
 		if err != nil {

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/zYros90/pkg/testutils"
@@ -12,29 +13,54 @@ func TestRunExecute(t *testing.T) {
 	if err != nil {
 		t.Errorf("error getting root path: %v", err)
 	}
+
+	correctBaseConfigPath := "app/config/test.yaml"
+	correctMergeConfigPath := "app/config/test_merge.yaml"
+
 	tests := []struct {
 		name    string
 		args    []string
 		wantErr bool
 	}{
 		{
-			"run",
-			[]string{"run", "--config", filepath.Join(rootPath, "app/config/base.yaml"), "--testcmd"},
+			"run with --config",
+			[]string{
+				"run",
+				"--config", filepath.Join(rootPath, correctBaseConfigPath),
+			},
 			false,
 		},
 		{
-			"run",
-			[]string{"run", "--mergeconfig", filepath.Join(rootPath, "app/config/base.yaml"), "--testcmd"},
+			"run with --mergeconfig",
+			[]string{
+				"run",
+				"--config", filepath.Join(rootPath, correctBaseConfigPath),
+				"--mergeconfig", filepath.Join(rootPath, correctMergeConfigPath),
+			},
 			false,
 		},
 		{
-			"run",
-			[]string{"run", "--config", filepath.Join(rootPath, "app/config/xyz.yaml"), "--testcmd"},
+			"run with wrong flags",
+			[]string{
+				"run",
+				"--abc", "xyz",
+			},
 			true,
 		},
 		{
-			"run",
-			[]string{"run", "--mergeconfig", filepath.Join(rootPath, "app/config/xyz.yaml"), "--testcmd"},
+			"run with wrong config path",
+			[]string{"run",
+				"--config", filepath.Join(rootPath, "app/config/xyz.yaml"),
+			},
+			true,
+		},
+		{
+			"run wrong merge config path",
+			[]string{
+				"run",
+				"--config", filepath.Join(rootPath, correctBaseConfigPath),
+				"--mergeconfig", filepath.Join(rootPath, "app/wrong/path/x.yaml"),
+			},
 			true,
 		},
 	}
@@ -43,7 +69,10 @@ func TestRunExecute(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			err := rootCmd.Execute()
 			if (err != nil) != tt.wantErr {
-				t.Errorf("rootCmd.Execute() error = %v, wantErr %v", err, tt.wantErr)
+				if !strings.Contains(err.Error(), errMsg) {
+					t.Log(err)
+					t.Errorf("rootCmd.Execute() error = %v, wantErr %v", err, tt.wantErr)
+				}
 			}
 		})
 	}

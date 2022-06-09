@@ -7,7 +7,6 @@ import (
 var (
 	cfgFile      string
 	cfgMergeFile string
-	testMode     bool
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -26,6 +25,5 @@ func Execute() {
 func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "app/config/base.yaml", "config file")
 	rootCmd.PersistentFlags().StringVar(&cfgMergeFile, "mergeconfig", "", "config to merge base config with")
-	rootCmd.PersistentFlags().BoolVar(&testMode, "testcmd", false, "test cobra cmds")
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/pkg/errors"
 	"github.com/zYros90/go-boilerplate-v1/app/config"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/biz"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/data"
@@ -12,6 +13,8 @@ import (
 
 	"github.com/spf13/cobra"
 )
+
+const errMsg = "error init server"
 
 // runCmd represents the run command
 var runCmd = &cobra.Command{
@@ -30,15 +33,15 @@ var runCmd = &cobra.Command{
 			return err
 		}
 
-		if testMode {
-			return nil
-		}
+		// if testMode {
+		// 	return nil
+		// }
 
 		// init server
 		err = initServer(conf, logger)
 		if err != nil {
 			logger.Sugar().Error(err)
-			return err
+			return errors.Wrap(err, "error init server")
 		}
 		return nil
 	},
@@ -52,7 +55,7 @@ func initServer(conf *config.Config, logger *logger.Log) error {
 	// init db
 	db, err := data.New(logger, conf)
 	if err != nil {
-		logger.Sugar().Fatal(err)
+		return err
 	}
 	// init repos
 	usrRepo := data.NewUser(db, logger)
@@ -64,7 +67,7 @@ func initServer(conf *config.Config, logger *logger.Log) error {
 	// init server
 	srv, err := server.New(conf, logger.Logger)
 	if err != nil {
-		logger.Sugar().Fatal(err)
+		return err
 	}
 
 	// init service
