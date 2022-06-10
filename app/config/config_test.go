@@ -14,8 +14,8 @@ func TestReadConfig(t *testing.T) {
 		t.Errorf("error getting root path: %v", err)
 	}
 	correctConfig := &Config{
-		Develop: true,
-		Debug:   true,
+		Develop:  true,
+		LogLevel: "debug",
 		Server: Server{
 			Host:         "127.0.0.0",
 			Port:         9090,
@@ -35,8 +35,8 @@ func TestReadConfig(t *testing.T) {
 	}
 
 	correctMergedConfig := &Config{
-		Develop: true,
-		Debug:   true,
+		Develop:  true,
+		LogLevel: "debug",
 		Server: Server{
 			Host:         "127.0.0.0",
 			Port:         9091,

@@ -28,7 +28,7 @@ var runCmd = &cobra.Command{
 		}
 
 		// init logger
-		logger, err := logger.NewLogger("debug", true, false, false)
+		logger, err := logger.NewLogger(conf.LogLevel, conf.Develop, false, false)
 		if err != nil {
 			return err
 		}

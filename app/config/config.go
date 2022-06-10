@@ -26,10 +26,10 @@ type Server struct {
 }
 
 type Config struct {
-	Develop bool   `mapstructure:"develop"`
-	Debug   bool   `mapstructure:"debug"`
-	Server  Server `mapstructure:"server"`
-	PG      PG     `mapstructure:"pg"`
+	Develop  bool   `mapstructure:"develop"`
+	LogLevel string `mapstructure:"log_level"`
+	Server   Server `mapstructure:"server"`
+	PG       PG     `mapstructure:"pg"`
 }
 
 func ReadConfig(

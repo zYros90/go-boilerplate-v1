@@ -22,8 +22,8 @@ func Test_newEcho(t *testing.T) {
 	}
 
 	correctConfig := &config.Config{
-		Develop: true,
-		Debug:   true,
+		Develop:  true,
+		LogLevel: "debug",
 		Server: config.Server{
 			Host:         "127.0.0.0",
 			Port:         9090,
