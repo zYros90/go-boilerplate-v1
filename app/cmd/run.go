@@ -72,7 +72,5 @@ func startApp(conf *config.Config, logger *logger.Log) error {
 
 	// start server
 	logger.Sugar().Info("starting server")
-	srv.Logger.Fatal(srv.Start(fmt.Sprintf(":%d", conf.Server.Port)))
-
-	return nil
+	return srv.Start(fmt.Sprintf(":%d", conf.Server.Port))
 }

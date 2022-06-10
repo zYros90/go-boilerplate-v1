@@ -66,8 +66,9 @@ func Test_newEcho(t *testing.T) {
 			false,
 		},
 	}
-	for _, tt := range tests {
+	for i, tt := range tests {
 		tt := tt
+		tt.args.config.Server.Port += i
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := server.New(tt.args.config, tt.args.logger)
 			if (err != nil) != tt.wantErr {
@@ -83,7 +84,6 @@ func Test_newEcho(t *testing.T) {
 					}
 				}
 			}()
-
 			time.Sleep(2 * time.Second)
 
 			err = got.Shutdown(context.Background())
