@@ -32,12 +32,15 @@ type Config struct {
 	PG       PG     `mapstructure:"pg"`
 }
 
+// ReadConfig reads base config and merges config if overwritePath is givven.
 func ReadConfig(
 	basePath string,
 	overwritePath string,
 ) (*Config, error) {
 	conf := new(Config)
+
 	viper.SetConfigFile(basePath)
+
 	err := viper.ReadInConfig()
 	if err != nil {
 		return nil, errors.Wrap(err, "error reading base config: "+basePath)
@@ -45,6 +48,7 @@ func ReadConfig(
 
 	if overwritePath != "" {
 		viper.SetConfigFile(overwritePath)
+
 		err := viper.MergeInConfig()
 		if err != nil {
 			return nil, errors.Wrap(err, "error merging with config: "+overwritePath)
@@ -55,5 +59,6 @@ func ReadConfig(
 	if err != nil {
 		return nil, errors.Wrap(err, "error unmarshalling config")
 	}
+
 	return conf, nil
 }

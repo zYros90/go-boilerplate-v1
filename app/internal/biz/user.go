@@ -28,6 +28,7 @@ type UserBiz struct {
 	conf   *config.Config
 }
 
+// UserRepo with method signatures from data layer.
 type UserRepo interface {
 	Create(context.Context, *User) (*User, error)
 	Update(context.Context, *User) (*User, error)
@@ -35,6 +36,7 @@ type UserRepo interface {
 	Delete(context.Context, string) error
 }
 
+// NewUserUsecase creates new user usercase.
 func NewUserUsecase(repo UserRepo, logger *zap.Logger, conf *config.Config) *UserBiz {
 	return &UserBiz{
 		repo:   repo,
@@ -49,6 +51,7 @@ func (biz *UserBiz) Create(ctx context.Context, usr *User) (*User, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "error hashing user password")
 	}
+
 	usr.Password = hashedPswd
 
 	// create in data layer
@@ -67,6 +70,7 @@ func (biz *UserBiz) Update(ctx context.Context, usr *User) (*User, error) {
 		if err != nil {
 			return nil, errors.Wrap(err, "error hashing user password")
 		}
+
 		usr.Password = hashedPswd
 	}
 
@@ -89,11 +93,12 @@ func (biz *UserBiz) Get(ctx context.Context, username string) (*User, error) {
 	return user, nil
 }
 
+// Delete deletes user.
 func (biz *UserBiz) Delete(ctx context.Context, username string) error {
-	// delete in data layer
 	err := biz.repo.Delete(ctx, username)
 	if err != nil {
 		return errors.Wrap(err, "error deleting user: "+username)
 	}
+
 	return nil
 }

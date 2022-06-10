@@ -1,10 +1,11 @@
-package cmd
+package cmd_test
 
 import (
 	"path/filepath"
 	"strings"
 	"testing"
 
+	"github.com/zYros90/go-boilerplate-v1/app/cmd"
 	"github.com/zYros90/pkg/testutils"
 )
 
@@ -66,11 +67,12 @@ func TestRunExecute(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		rootCmd.SetArgs(tt.args)
+		tt := tt
+		cmd.RootCmd.SetArgs(tt.args)
 		t.Run(tt.name, func(t *testing.T) {
-			err := rootCmd.Execute()
+			err := cmd.RootCmd.Execute()
 			if (err != nil) != tt.wantErr {
-				if !strings.Contains(err.Error(), errMsg) {
+				if !strings.Contains(err.Error(), cmd.ErrMsg) {
 					t.Log(err)
 					t.Errorf("rootCmd.Execute() error = %v, wantErr %v", err, tt.wantErr)
 				}

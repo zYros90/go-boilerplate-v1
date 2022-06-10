@@ -37,9 +37,7 @@ linters:
   enable:
     - asciicheck
     - bidichk
-    - bodyclose
     - containedctx
-    - contextcheck
     - cyclop
     - deadcode
     - decorder
@@ -53,13 +51,13 @@ linters:
     - errorlint
     - execinquery
     - exhaustive
-    - exhaustivestruct
+    # - exhaustivestruct # successor is: exhaustive
     - exhaustruct
     - exportloopref
     - forbidigo
     - forcetypeassert
     - funlen
-    - gci
+    # - gci
     - gochecknoglobals
     - gochecknoinits
     - gocognit
@@ -73,7 +71,6 @@ linters:
     - gofumpt
     - goheader
     - goimports
-    - golint
     - gomnd
     - gomoddirectives
     - gomodguard
@@ -82,50 +79,39 @@ linters:
     - gosimple
     - govet
     - grouper
-    - ifshort
+    # - ifshort
     - importas
     - ineffassign
-    - interfacer
     - ireturn
     - lll
     - maintidx
     - makezero
-    - maligned
     - misspell
     - nakedret
     - nestif
-    - nilerr
     - nilnil
     - nlreturn
-    - noctx
     - nolintlint
     - nonamedreturns
     - nosprintfhostport
-    - paralleltest
+    # - paralleltest
     - prealloc
     - predeclared
     - promlinter
     - revive
-    - rowserrcheck
-    - scopelint
-    - sqlclosecheck
     - staticcheck
-    - structcheck
     - stylecheck
     - tagliatelle
     - tenv
     - testpackage
     - thelper
-    - tparallel
     - typecheck
     - unconvert
-    - unparam
     - unused
     - varcheck
     - varnamelen
-    - wastedassign
     - whitespace
-    - wrapcheck
+    # - wrapcheck
     - wsl
 issues:
   # List of regexps of issue texts to exclude.
@@ -146,6 +132,8 @@ issues:
         - errcheck
         - dupl
         - gosec
+        - varnamelen
+        - funlen
     # Exclude known linters from partially hard-vendored code,
     # which is impossible to exclude via `nolint` comments.
     - path: internal/hmac/
@@ -191,7 +179,7 @@ issues:
   # Show only new issues created after git revision `REV`.
   new-from-rev: HEAD
   # Show only new issues created in git patch with set file path.
-  new-from-patch: path/to/patch/file
+  new-from-patch: ""
   # Fix found issues (if it's supported by the linter).
   fix: true
 
@@ -220,3 +208,67 @@ severity:
     - linters:
         - dupl
       severity: info
+
+linters-settings:
+  varnamelen:
+    # The longest distance, in source lines, that is being considered a "small scope".
+    # Variables used in at most this many lines will be ignored.
+    # Default: 5
+    max-distance: 6
+    # The minimum length of a variable's name that is considered "long".
+    # Variable names that are at least this long will be ignored.
+    # Default: 3
+    min-name-length: 2
+    # Check method receivers.
+    # Default: false
+    check-receiver: true
+    # Check named return values.
+    # Default: false
+    check-return: true
+    # Check type parameters.
+    # Default: false
+    check-type-param: true
+    # Ignore "ok" variables that hold the bool return value of a type assertion.
+    # Default: false
+    ignore-type-assert-ok: true
+    # Ignore "ok" variables that hold the bool return value of a map index.
+    # Default: false
+    ignore-map-index-ok: true
+    # Ignore "ok" variables that hold the bool return value of a channel receive.
+    # Default: false
+    ignore-chan-recv-ok: true
+    # Optional list of variable names that should be ignored completely.
+    # Default: []
+    ignore-names:
+      - err
+      - db
+    # Optional list of variable declarations that should be ignored completely.
+    # Entries must be in one of the following forms (see below for examples):
+    # - for variables, parameters, named return values, method receivers, or type parameters:
+    #   <name> <type>  (<type> can also be a pointer/slice/map/chan/...)
+    # - for constants: const <name>
+    #
+    # Default: []
+    ignore-decls:
+      - c echo.Context
+      - t testing.T
+      - f *foo.Bar
+      - e error
+      - i int
+      - const C
+      - T any
+      - m map[string]int      
+
+  stylecheck:
+    go: "1.18"
+    checks: ["all","-ST1000", "-ST1003", "-ST1016", "-ST1020", "-ST1021", "-ST1022"]
+    # https://staticcheck.io/docs/options#dot_import_whitelist
+    # Default: ["github.com/mmcloughlin/avo/build", "github.com/mmcloughlin/avo/operand", "github.com/mmcloughlin/avo/reg"]
+    dot-import-whitelist:
+      - fmt
+    # https://staticcheck.io/docs/options#initialisms
+    # Default: ["ACL", "API", "ASCII", "CPU", "CSS", "DNS", "EOF", "GUID", "HTML", "HTTP", "HTTPS", "ID", "IP", "JSON", "QPS", "RAM", "RPC", "SLA", "SMTP", "SQL", "SSH", "TCP", "TLS", "TTL", "UDP", "UI", "GID", "UID", "UUID", "URI", "URL", "UTF8", "VM", "XML", "XMPP", "XSRF", "XSS", "SIP", "RTP", "AMQP", "DB", "TS"]
+    initialisms: ["ACL", "API", "ASCII", "CPU", "CSS", "DNS", "EOF", "GUID", "HTML", "HTTP", "HTTPS", "ID", "IP", "JSON", "QPS", "RAM", "RPC", "SLA", "SMTP", "SQL", "SSH", "TCP", "TLS", "TTL", "UDP", "UI", "GID", "UID", "UUID", "URI", "URL", "UTF8", "VM", "XML", "XMPP", "XSRF", "XSS", "SIP", "RTP", "AMQP", "DB", "TS"]
+    # https://staticcheck.io/docs/options#http_status_code_whitelist
+    # Default: ["200", "400", "404", "500"]
+    http-status-code-whitelist: ["200", "400", "404", "500"]      

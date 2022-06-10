@@ -6,7 +6,7 @@ import (
 	"time"
 
 	entsql "entgo.io/ent/dialect/sql"
-	_ "github.com/lib/pq"
+	_ "github.com/lib/pq" // db driver
 	"github.com/pkg/errors"
 	"github.com/zYros90/go-boilerplate-v1/app/config"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/data/ent"
@@ -14,6 +14,9 @@ import (
 	"github.com/zYros90/pkg/logger"
 )
 
+const dbConnTimeout = 10 * time.Second
+
+// New initializes ent client.
 func New(logger *logger.Log, conf *config.Config) (*ent.Client, error) {
 	source := fmt.Sprintf(
 		"host=%s port=%d user=%s dbname=%s password=%s sslmode=%s",
@@ -29,13 +32,16 @@ func New(logger *logger.Log, conf *config.Config) (*ent.Client, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "error open connection to db")
 	}
+
 	opts := []ent.Option{
 		ent.Log(logger.Sugar().Debug),
 		ent.Driver(db),
 	}
+
 	// Open the database connection.
 	client := ent.NewClient(opts...)
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+	ctx, cancel := context.WithTimeout(context.Background(), dbConnTimeout)
 	defer cancel()
 
 	err = client.Schema.Create(
@@ -46,5 +52,6 @@ func New(logger *logger.Log, conf *config.Config) (*ent.Client, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return client, nil
 }

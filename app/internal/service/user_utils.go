@@ -18,7 +18,7 @@ func parseUserResp(user *biz.User) *pb.UserResp {
 }
 
 func parseUserCreateReq(userReq *pb.CreateUserReq) *biz.User {
-	return &biz.User{
+	return &biz.User{ // nolint:exhaustruct
 		Username:  userReq.GetUsername(),
 		Password:  userReq.GetPassword(),
 		Email:     userReq.GetEmail(),

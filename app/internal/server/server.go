@@ -7,32 +7,23 @@ import (
 	"go.uber.org/zap"
 )
 
+// New creates new echo server.
 func New(
 	conf *config.Config,
 	logger *zap.Logger,
 ) (*echo.Echo, error) {
-	echoServer, err := newEcho(conf, logger)
-	if err != nil {
-		return nil, err
-	}
-	return echoServer, nil
-}
+	echoSrv := echo.New()
+	echoSrv.Use(middleware.Logger())
+	echoSrv.Use(middleware.Recover())
 
-func newEcho(
-	config *config.Config,
-	logger *zap.Logger,
-) (*echo.Echo, error) {
-	e := echo.New()
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: config.Server.AllowOrigins,
+	echoSrv.Use(middleware.CORSWithConfig(middleware.CORSConfig{ // nolint:exhaustruct
+		AllowOrigins: conf.Server.AllowOrigins,
 		AllowHeaders: []string{
 			echo.HeaderOrigin,
 			echo.HeaderContentType,
 			echo.HeaderAccept,
 		},
 	}))
-	return e, nil
+
+	return echoSrv, nil
 }

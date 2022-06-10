@@ -17,6 +17,7 @@ type LoginBiz struct {
 	usrBiz *UserBiz
 }
 
+// NewLoginUsecase create new login usecase.
 func NewLoginUsecase(logger *zap.Logger, conf *config.Config, usrBiz *UserBiz) *LoginBiz {
 	return &LoginBiz{
 		logger: logger,
@@ -25,6 +26,7 @@ func NewLoginUsecase(logger *zap.Logger, conf *config.Config, usrBiz *UserBiz) *
 	}
 }
 
+// Login handle business logic for user login.
 func (biz *LoginBiz) Login(ctx context.Context, username string, password string) (string, error) {
 	user, err := biz.usrBiz.Get(ctx, username)
 	if err != nil {

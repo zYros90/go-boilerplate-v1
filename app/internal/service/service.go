@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// Service struct.
 type Service struct {
 	logger   *zap.Logger
 	conf     *config.Config
@@ -16,7 +17,8 @@ type Service struct {
 	bizLogin *biz.LoginBiz
 }
 
-func Init(
+// New create new service and registers routes.
+func New(
 	conf *config.Config,
 	logger *zap.Logger,
 	srv *echo.Echo,
@@ -30,22 +32,22 @@ func Init(
 		bizUsr:   usrBiz,
 		bizLogin: bizLogin,
 	}
-	svc.Register()
+	svc.register()
 }
 
-func (svc *Service) Register() {
-	e := svc.srv
+func (svc *Service) register() {
+	echoSrv := svc.srv
 
 	jwtMW := echomw.JWT(svc.conf.Server.JWTSecret)
 
 	// USER
-	user := e.Group("/user/v1")
+	user := echoSrv.Group("/user/v1")
 	user.POST("", svc.CreateUser)
 	user.PUT("", svc.UpdateUser, jwtMW)
 	user.GET("", svc.GetUser, jwtMW)
 	user.DELETE("", svc.DeleteUser, jwtMW)
 
 	// login
-	login := e.Group("/login/v1")
+	login := echoSrv.Group("/login/v1")
 	login.POST("", svc.Login)
 }

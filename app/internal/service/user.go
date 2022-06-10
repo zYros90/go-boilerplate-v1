@@ -9,15 +9,17 @@ import (
 	pb "github.com/zYros90/go-boilerplate-v1/api/v1/generated"
 )
 
-// *******************
-// *** create user ***
-// *******************.
-func (h *Service) CreateUser(c echo.Context) error {
+const timeOut = 5 * time.Second
+
+// CreateUser endpoint.
+func (svc *Service) CreateUser(c echo.Context) error {
 	// bind user request
 	userReq := new(pb.CreateUserReq)
+
 	err := c.Bind(userReq)
 	if err != nil {
-		h.logger.Sugar().Error(err)
+		svc.logger.Sugar().Error(err)
+
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
@@ -25,13 +27,14 @@ func (h *Service) CreateUser(c echo.Context) error {
 	user := parseUserCreateReq(userReq)
 
 	// add timeout to context
-	ctx, cancel := context.WithTimeout(c.Request().Context(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(c.Request().Context(), timeOut)
 	defer cancel()
 
 	// create user
-	user, err = h.bizUsr.Create(ctx, user)
+	user, err = svc.bizUsr.Create(ctx, user)
 	if err != nil {
-		h.logger.Sugar().Warn(err)
+		svc.logger.Sugar().Warn(err)
+
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
@@ -41,15 +44,15 @@ func (h *Service) CreateUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, userResp)
 }
 
-// *******************
-// *** update user ***
-// *******************.
-func (h *Service) UpdateUser(c echo.Context) error {
+// UpdateUser endpoint.
+func (svc *Service) UpdateUser(c echo.Context) error {
 	// bind user request
 	userReq := new(pb.CreateUserReq)
+
 	err := c.Bind(userReq)
 	if err != nil {
-		h.logger.Sugar().Error(err)
+		svc.logger.Sugar().Error(err)
+
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
@@ -57,13 +60,14 @@ func (h *Service) UpdateUser(c echo.Context) error {
 	user := parseUserCreateReq(userReq)
 
 	// add timeout to context
-	ctx, cancel := context.WithTimeout(c.Request().Context(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(c.Request().Context(), timeOut)
 	defer cancel()
 
 	// create user
-	user, err = h.bizUsr.Update(ctx, user)
+	user, err = svc.bizUsr.Update(ctx, user)
 	if err != nil {
-		h.logger.Sugar().Warn(err)
+		svc.logger.Sugar().Warn(err)
+
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
@@ -73,48 +77,49 @@ func (h *Service) UpdateUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, userResp)
 }
 
-// ****************
-// *** get user ***
-// ****************.
-func (h *Service) GetUser(c echo.Context) error {
+// GetUser endpoint.
+func (svc *Service) GetUser(c echo.Context) error {
 	username, ok := c.Get("username").(string)
 	if !ok {
-		h.logger.Sugar().Warn("no key <username> found in context")
+		svc.logger.Sugar().Warn("no key <username> found in context")
+
 		return c.JSON(http.StatusMethodNotAllowed, "invalid token")
 	}
 
 	// add timeout to context
-	ctx, cancel := context.WithTimeout(c.Request().Context(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(c.Request().Context(), timeOut)
 	defer cancel()
 
-	user, err := h.bizUsr.Get(ctx, username)
+	user, err := svc.bizUsr.Get(ctx, username)
 	if err != nil {
-		h.logger.Sugar().Warn(err)
+		svc.logger.Sugar().Warn(err)
+
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
 	// parse to response model
 	userResp := parseUserResp(user)
+
 	return c.JSON(http.StatusOK, userResp)
 }
 
-// *******************
-// *** delete user ***
-// *******************.
-func (h *Service) DeleteUser(c echo.Context) error {
+// DeleteUser User endpoint.
+func (svc *Service) DeleteUser(c echo.Context) error {
 	username, ok := c.Get("username").(string)
 	if !ok {
-		h.logger.Sugar().Warn("no key <username> found in context")
+		svc.logger.Sugar().Warn("no key <username> found in context")
+
 		return c.JSON(http.StatusMethodNotAllowed, "invalid token")
 	}
 
 	// add timeout to context
-	ctx, cancel := context.WithTimeout(c.Request().Context(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(c.Request().Context(), timeOut)
 	defer cancel()
 
-	err := h.bizUsr.Delete(ctx, username)
+	err := svc.bizUsr.Delete(ctx, username)
 	if err != nil {
-		h.logger.Sugar().Warn(err)
+		svc.logger.Sugar().Warn(err)
+
 		return c.JSON(http.StatusBadRequest, err)
 	}
 

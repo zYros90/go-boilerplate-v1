@@ -5,12 +5,12 @@ import (
 )
 
 var (
-	cfgFile      string
-	cfgMergeFile string
+	cfgFile      string // nolint:gochecknoglobals
+	cfgMergeFile string // nolint:gochecknoglobals
 )
 
-// rootCmd represents the base command when called without any subcommands.
-var rootCmd = &cobra.Command{
+// RootCmd represents the base command when called without any subcommands.
+var RootCmd = &cobra.Command{ // nolint:exhaustruct,gochecknoglobals
 	Use:   "template",
 	Short: "A brief description of your application",
 	Long:  `A longer description `,
@@ -19,11 +19,11 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	cobra.CheckErr(rootCmd.Execute())
+	cobra.CheckErr(RootCmd.Execute())
 }
 
-func init() {
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "app/config/base.yaml", "config file")
-	rootCmd.PersistentFlags().StringVar(&cfgMergeFile, "mergeconfig", "", "config to merge base config with")
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+func init() { // nolint:gochecknoinits
+	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "app/config/base.yaml", "config file")
+	RootCmd.PersistentFlags().StringVar(&cfgMergeFile, "mergeconfig", "", "config to merge base config with")
+	RootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
