@@ -49,7 +49,8 @@ func TestRunExecute(t *testing.T) {
 		},
 		{
 			"run with wrong config path",
-			[]string{"run",
+			[]string{
+				"run",
 				"--config", filepath.Join(rootPath, "app/config/xyz.yaml"),
 			},
 			true,

@@ -68,7 +68,6 @@ func Test_newEcho(t *testing.T) {
 					if time.Now().Before(notAcceptedEndTime) {
 						t.Errorf("newEcho() error starting echo = %v", err)
 					}
-
 				}
 			}()
 			time.Sleep(2 * time.Second)

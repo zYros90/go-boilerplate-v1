@@ -16,7 +16,7 @@ import (
 
 const errMsg = "error starting app"
 
-// runCmd represents the run command
+// runCmd represents the run command.
 var runCmd = &cobra.Command{
 	Use:   "run",
 	Short: "run the server",
@@ -36,7 +36,6 @@ var runCmd = &cobra.Command{
 		// start app
 		err = startApp(conf, logger)
 		if err != nil {
-			logger.Sugar().Error(err)
 			return errors.Wrap(err, errMsg)
 		}
 		return nil

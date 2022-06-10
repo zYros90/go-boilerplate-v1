@@ -48,5 +48,4 @@ func (svc *Service) Register() {
 	// login
 	login := e.Group("/login/v1")
 	login.POST("", svc.Login)
-
 }

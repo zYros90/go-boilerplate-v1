@@ -11,7 +11,7 @@ import (
 
 // *******************
 // *** create user ***
-// *******************
+// *******************.
 func (h *Service) CreateUser(c echo.Context) error {
 	// bind user request
 	userReq := new(pb.CreateUserReq)
@@ -43,7 +43,7 @@ func (h *Service) CreateUser(c echo.Context) error {
 
 // *******************
 // *** update user ***
-// *******************
+// *******************.
 func (h *Service) UpdateUser(c echo.Context) error {
 	// bind user request
 	userReq := new(pb.CreateUserReq)
@@ -75,7 +75,7 @@ func (h *Service) UpdateUser(c echo.Context) error {
 
 // ****************
 // *** get user ***
-// ****************
+// ****************.
 func (h *Service) GetUser(c echo.Context) error {
 	username, ok := c.Get("username").(string)
 	if !ok {
@@ -100,7 +100,7 @@ func (h *Service) GetUser(c echo.Context) error {
 
 // *******************
 // *** delete user ***
-// *******************
+// *******************.
 func (h *Service) DeleteUser(c echo.Context) error {
 	username, ok := c.Get("username").(string)
 	if !ok {
