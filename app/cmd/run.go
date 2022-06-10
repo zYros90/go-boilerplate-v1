@@ -14,7 +14,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const errMsg = "error init server"
+const errMsg = "error starting app"
 
 // runCmd represents the run command
 var runCmd = &cobra.Command{
@@ -37,7 +37,7 @@ var runCmd = &cobra.Command{
 		err = startApp(conf, logger)
 		if err != nil {
 			logger.Sugar().Error(err)
-			return errors.Wrap(err, "error init server")
+			return errors.Wrap(err, errMsg)
 		}
 		return nil
 	},
