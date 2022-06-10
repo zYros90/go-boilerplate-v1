@@ -37,8 +37,6 @@ func ReadConfig(
 	basePath string,
 	overwritePath string,
 ) (*Config, error) {
-	conf := new(Config)
-
 	viper.SetConfigFile(basePath)
 
 	err := viper.ReadInConfig()
@@ -54,6 +52,8 @@ func ReadConfig(
 			return nil, errors.Wrap(err, "error merging with config: "+overwritePath)
 		}
 	}
+
+	conf := new(Config)
 
 	err = viper.Unmarshal(conf)
 	if err != nil {
