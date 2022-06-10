@@ -27,7 +27,6 @@ func Test_newEcho(t *testing.T) {
 		Server: config.Server{
 			Host:         "127.0.0.0",
 			Port:         9090,
-			JWTSecret:    "thisismysecretkey",
 			AllowOrigins: []string{"http://localhost:3000"},
 		},
 	}

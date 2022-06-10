@@ -47,11 +47,7 @@ func ReadConfig(
 		viper.SetConfigFile(overwritePath)
 		err := viper.MergeInConfig()
 		if err != nil {
-			if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-				return nil, errors.Wrap(err, "couldn't find merge config: "+basePath)
-			} else {
-				return nil, errors.Wrap(err, "error reading merge config: "+basePath)
-			}
+			return nil, errors.Wrap(err, "error merging with config: "+overwritePath)
 		}
 	}
 

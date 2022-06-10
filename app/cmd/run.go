@@ -33,12 +33,8 @@ var runCmd = &cobra.Command{
 			return err
 		}
 
-		// if testMode {
-		// 	return nil
-		// }
-
-		// init server
-		err = initServer(conf, logger)
+		// start app
+		err = startApp(conf, logger)
 		if err != nil {
 			logger.Sugar().Error(err)
 			return errors.Wrap(err, "error init server")
@@ -51,7 +47,7 @@ func init() {
 	rootCmd.AddCommand(runCmd)
 }
 
-func initServer(conf *config.Config, logger *logger.Log) error {
+func startApp(conf *config.Config, logger *logger.Log) error {
 	// init db
 	db, err := data.New(logger, conf)
 	if err != nil {
