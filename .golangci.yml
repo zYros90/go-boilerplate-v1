@@ -16,7 +16,6 @@ run:
   modules-download-mode: readonly
   allow-parallel-runners: false
 
-
 output:
   # Default: colored-line-number
   format: colored-line-number
@@ -25,8 +24,6 @@ output:
   uniq-by-line: true
   path-prefix: ""
   sort-results: false
-
-
 
 linters:
   # Disable all linters.
@@ -115,12 +112,6 @@ linters:
     - wsl
 issues:
   # List of regexps of issue texts to exclude.
-  #
-  # But independently of this option we use default exclude patterns,
-  # it can be disabled by `exclude-use-default: false`.
-  # To list all excluded by default patterns execute `golangci-lint run --help`
-  #
-  # Default: []
   exclude:
     - abcdef
   # Excluding configuration per-path, per-linter, per-text and per-source
@@ -152,7 +143,7 @@ issues:
   # it can be disabled by this option.
   # To list all excluded by default patterns execute `golangci-lint run --help`.
   # Default: true.
-  exclude-use-default: false
+  exclude-use-default: true
   # If set to true exclude and exclude-rules regular expressions become case-sensitive.
   # Default: false
   exclude-case-sensitive: false
@@ -168,14 +159,8 @@ issues:
   # Set to 0 to disable.
   # Default: 3
   max-same-issues: 0
-  # Show only new issues: if there are unstaged changes or untracked files,
-  # only those changes are analyzed, else only changes in HEAD~ are analyzed.
-  # It's a super-useful option for integration of golangci-lint into existing large codebase.
-  # It's not practical to fix all existing issues at the moment of integration:
-  # much better don't allow issues in new code.
-  #
-  # Default: false.
-  new: true
+  # Show only new issues
+  new: false
   # Show only new issues created after git revision `REV`.
   new-from-rev: HEAD
   # Show only new issues created in git patch with set file path.
@@ -197,17 +182,17 @@ severity:
   default-severity: error
   # If set to true `severity-rules` regular expressions become case-sensitive.
   # Default: false
-  case-sensitive: true
+  case-sensitive: false
   # When a list of severity rules are provided, severity information will be added to lint issues.
   # Severity rules have the same filtering capability as exclude rules
   # except you are allowed to specify one matcher per severity rule.
   # Only affects out formats that support setting severity information.
   #
   # Default: []
-  rules:
-    - linters:
-        - dupl
-      severity: info
+  # rules:
+  #   - linters:
+      #   - dupl
+      # severity: info
 
 linters-settings:
   varnamelen:
