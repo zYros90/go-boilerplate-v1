@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	entgo.io/ent v0.10.1
+	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/labstack/echo/v4 v4.7.2
 	github.com/lib/pq v1.10.4
 	github.com/pkg/errors v0.9.1
@@ -22,6 +23,7 @@ require (
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/go-openapi/inflect v0.19.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
+	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect

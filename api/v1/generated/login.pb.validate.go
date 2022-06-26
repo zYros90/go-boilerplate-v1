@@ -57,9 +57,27 @@ func (m *LoginReq) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Username
+	if utf8.RuneCountInString(m.GetUsername()) < 3 {
+		err := LoginReqValidationError{
+			field:  "Username",
+			reason: "value length must be at least 3 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for Password
+	if utf8.RuneCountInString(m.GetPassword()) < 3 {
+		err := LoginReqValidationError{
+			field:  "Password",
+			reason: "value length must be at least 3 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return LoginReqMultiError(errors)
@@ -160,7 +178,16 @@ func (m *LoginResp) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Token
+	if utf8.RuneCountInString(m.GetToken()) < 3 {
+		err := LoginRespValidationError{
+			field:  "Token",
+			reason: "value length must be at least 3 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return LoginRespMultiError(errors)
