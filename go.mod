@@ -10,8 +10,9 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.12.0
-	github.com/zYros90/pkg v0.0.0-20220626091937-31616f26cf26
+	github.com/zYros90/pkg v0.0.0-20220626105039-fa1056d56de2
 	go.uber.org/zap v1.21.0
+	google.golang.org/grpc v1.47.0
 	google.golang.org/protobuf v1.28.0
 )
 
@@ -44,6 +45,7 @@ require (
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324 // indirect
+	google.golang.org/genproto v0.0.0-20220519153652-3a47de7e79bd // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/ini.v1 v1.66.4 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

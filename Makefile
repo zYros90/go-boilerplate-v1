@@ -11,6 +11,7 @@ proto:
 		--proto_path=$(THIRD_PARTY) \
 		--proto_path=$(PROTOC_COMMON_PATH) \
 		--go_out=paths=source_relative:$(OUT_PATH) \
+		--go-grpc_out=paths=source_relative:$(OUT_PATH) \
 		--go-errors_out=paths=source_relative:$(OUT_PATH) \
 		--validate_out=paths=source_relative,lang=go:$(OUT_PATH) \
 		$(PROTO_PATH)/*.proto

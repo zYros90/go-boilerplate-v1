@@ -57,6 +57,8 @@ func (svc *Service) DeleteUser(c *srvctx.Ctx, req *pb.DeleteUserReq) (*pb.Delete
 	if err != nil {
 		return nil, err
 	}
+
 	resp := &pb.DeleteUserResp{}
+
 	return resp, nil
 }
