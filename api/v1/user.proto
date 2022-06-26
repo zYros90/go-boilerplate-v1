@@ -8,6 +8,13 @@ option go_package = "github.com/zYros90/go-boilerplate-v1/api/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.user.v1;";
 
+service UserSvc {
+  rpc Create(CreateUserReq) returns (UserResp) {}
+  rpc Update(CreateUserReq) returns (UserResp) {}
+  rpc Get(GetUserReq) returns (UserResp) {}
+  rpc Delete(DeleteUserReq) returns (DeleteUserResp) {}
+}
+
 message CreateUserReq {
   string username = 1 [ (validate.rules).string.min_len = 3 ];
   string password = 2 [ (validate.rules).string.min_len = 3 ];
@@ -17,6 +24,7 @@ message CreateUserReq {
 }
 
 message DeleteUserReq {}
+message DeleteUserResp {}
 
 message GetUserReq {}
 

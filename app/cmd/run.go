@@ -54,6 +54,7 @@ func startApp(conf *config.Config, logger *logger.Log) error {
 	if err != nil {
 		return err
 	}
+
 	// init repos
 	usrRepo := data.NewUser(db, logger)
 
@@ -61,14 +62,14 @@ func startApp(conf *config.Config, logger *logger.Log) error {
 	bizUsr := biz.NewUserUsecase(usrRepo, logger.Logger, conf)
 	bizLogin := biz.NewLoginUsecase(logger.Logger, conf, bizUsr)
 
+	// init service
+	svc := service.New(conf, logger.Logger, bizUsr, bizLogin)
+
 	// init server
-	srv, err := server.New(conf, logger.Logger)
+	srv, err := server.NewEcho(conf, logger.Logger, svc)
 	if err != nil {
 		return err
 	}
-
-	// init service
-	service.New(conf, logger.Logger, srv, bizUsr, bizLogin)
 
 	// start server
 	logger.Sugar().Info("starting server")

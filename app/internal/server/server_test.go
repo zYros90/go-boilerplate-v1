@@ -7,7 +7,9 @@ import (
 	"time"
 
 	"github.com/zYros90/go-boilerplate-v1/app/config"
+	"github.com/zYros90/go-boilerplate-v1/app/internal/biz"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/server"
+	"github.com/zYros90/go-boilerplate-v1/app/internal/service"
 	"github.com/zYros90/pkg/logger"
 	"go.uber.org/zap"
 )
@@ -16,6 +18,7 @@ func Test_newEcho(t *testing.T) {
 	type args struct {
 		config *config.Config
 		logger *zap.Logger
+		svc    *service.Service
 	}
 
 	log, err := logger.NewLogger("debug", true, true, true)
@@ -44,6 +47,8 @@ func Test_newEcho(t *testing.T) {
 		},
 	}
 
+	svc := service.New(correctConfig, log.Logger, &biz.UserBiz{}, &biz.LoginBiz{})
+
 	tests := []struct {
 		name    string
 		args    args
@@ -54,6 +59,7 @@ func Test_newEcho(t *testing.T) {
 			args{
 				config: correctConfig,
 				logger: log.Logger,
+				svc:    svc,
 			},
 			false,
 		},
@@ -62,6 +68,7 @@ func Test_newEcho(t *testing.T) {
 			args{
 				config: correctConfig,
 				logger: log.Logger,
+				svc:    svc,
 			},
 			false,
 		},
@@ -70,12 +77,12 @@ func Test_newEcho(t *testing.T) {
 		tt := tt
 		tt.args.config.Server.Port += i
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := server.New(tt.args.config, tt.args.logger)
+			got, err := server.NewEcho(tt.args.config, tt.args.logger, tt.args.svc)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("newEcho() error = %v, wantErr %v", err, tt.wantErr)
 			}
 
-			notAcceptedEndTime := time.Now().Add(1 * time.Second)
+			notAcceptedEndTime := time.Now().Add(200 * time.Millisecond)
 			go func() {
 				err = got.Start(fmt.Sprintf(":%d", correctConfig.Server.Port))
 				if err != nil {
@@ -84,7 +91,7 @@ func Test_newEcho(t *testing.T) {
 					}
 				}
 			}()
-			time.Sleep(2 * time.Second)
+			time.Sleep(400 * time.Millisecond)
 
 			err = got.Shutdown(context.Background())
 			if err != nil {

@@ -1,127 +1,62 @@
 package service
 
 import (
-	"context"
-	"net/http"
-	"time"
-
-	"github.com/labstack/echo/v4"
 	pb "github.com/zYros90/go-boilerplate-v1/api/v1/generated"
+	"github.com/zYros90/pkg/srvctx"
 )
 
-const timeOut = 5 * time.Second
-
 // CreateUser endpoint.
-func (svc *Service) CreateUser(c echo.Context) error {
-	// bind user request
-	userReq := new(pb.CreateUserReq)
-
-	err := c.Bind(userReq)
-	if err != nil {
-		svc.logger.Sugar().Error(err)
-
-		return c.JSON(http.StatusBadRequest, err)
-	}
-
-	// parse to biz model
-	user := parseUserCreateReq(userReq)
-
-	// add timeout to context
-	ctx, cancel := context.WithTimeout(c.Request().Context(), timeOut)
-	defer cancel()
+func (svc *Service) CreateUser(c *srvctx.Ctx, req *pb.CreateUserReq) (*pb.UserResp, error) {
+	user := parseUserCreateReq(req)
 
 	// create user
-	user, err = svc.bizUsr.Create(ctx, user)
+	user, err := svc.bizUsr.Create(c, user)
 	if err != nil {
-		svc.logger.Sugar().Warn(err)
-
-		return c.JSON(http.StatusBadRequest, err)
+		return nil, err
 	}
 
 	// parse to response model
 	userResp := parseUserResp(user)
 
-	return c.JSON(http.StatusOK, userResp)
+	return userResp, nil
 }
 
 // UpdateUser endpoint.
-func (svc *Service) UpdateUser(c echo.Context) error {
-	// bind user request
-	userReq := new(pb.CreateUserReq)
-
-	err := c.Bind(userReq)
-	if err != nil {
-		svc.logger.Sugar().Error(err)
-
-		return c.JSON(http.StatusBadRequest, err)
-	}
-
+func (svc *Service) UpdateUser(c *srvctx.Ctx, req *pb.CreateUserReq) (*pb.UserResp, error) {
 	// parse to biz model
-	user := parseUserCreateReq(userReq)
-
-	// add timeout to context
-	ctx, cancel := context.WithTimeout(c.Request().Context(), timeOut)
-	defer cancel()
+	user := parseUserCreateReq(req)
 
 	// create user
-	user, err = svc.bizUsr.Update(ctx, user)
+	user, err := svc.bizUsr.Update(c, user)
 	if err != nil {
-		svc.logger.Sugar().Warn(err)
-
-		return c.JSON(http.StatusBadRequest, err)
+		return nil, err
 	}
 
 	// parse to response model
 	userResp := parseUserResp(user)
 
-	return c.JSON(http.StatusOK, userResp)
+	return userResp, nil
 }
 
 // GetUser endpoint.
-func (svc *Service) GetUser(c echo.Context) error {
-	username, ok := c.Get("username").(string)
-	if !ok {
-		svc.logger.Sugar().Warn("no key <username> found in context")
-
-		return c.JSON(http.StatusMethodNotAllowed, "invalid token")
-	}
-
-	// add timeout to context
-	ctx, cancel := context.WithTimeout(c.Request().Context(), timeOut)
-	defer cancel()
-
-	user, err := svc.bizUsr.Get(ctx, username)
+func (svc *Service) GetUser(c *srvctx.Ctx, req *pb.GetUserReq) (*pb.UserResp, error) {
+	user, err := svc.bizUsr.Get(c, c.Username)
 	if err != nil {
-		svc.logger.Sugar().Warn(err)
-
-		return c.JSON(http.StatusBadRequest, err)
+		return nil, err
 	}
 
 	// parse to response model
 	userResp := parseUserResp(user)
 
-	return c.JSON(http.StatusOK, userResp)
+	return userResp, nil
 }
 
 // DeleteUser User endpoint.
-func (svc *Service) DeleteUser(c echo.Context) error {
-	username, ok := c.Get("username").(string)
-	if !ok {
-		svc.logger.Sugar().Warn("no key <username> found in context")
-
-		return c.JSON(http.StatusMethodNotAllowed, "invalid token")
-	}
-
-	// add timeout to context
-	ctx, cancel := context.WithTimeout(c.Request().Context(), timeOut)
-	defer cancel()
-
-	err := svc.bizUsr.Delete(ctx, username)
+func (svc *Service) DeleteUser(c *srvctx.Ctx, req *pb.DeleteUserReq) (*pb.DeleteUserResp, error) {
+	err := svc.bizUsr.Delete(c, c.Username)
 	if err != nil {
-		svc.logger.Sugar().Warn(err)
-
-		return c.JSON(http.StatusBadRequest, err)
+		return nil, err
 	}
-
-	return c.JSON(http.StatusOK, "ok")
+	resp := &pb.DeleteUserResp{}
+	return resp, nil
 }
