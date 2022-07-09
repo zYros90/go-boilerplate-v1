@@ -11,9 +11,9 @@ proto:
 	@protoc \
 		--proto_path=$(PROTO_PATH) \
 		--proto_path=$(THIRD_PARTY) \
+		--proto_path=/usr/local/include \
 		--go_out=paths=source_relative:$(OUT_PATH) \
 		--go-grpc_out=paths=source_relative:$(OUT_PATH) \
-		--go-errors_out=paths=source_relative:$(OUT_PATH) \
 		--validate_out=paths=source_relative,lang=go:$(OUT_PATH) \
 		--jsonschema_out=source_relative:$(SCHEMAS_PATH) \
 		$(PROTO_PATH)/*.proto

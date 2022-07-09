@@ -1,0 +1,11 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$ref": "#/definitions/DeleteUserReq",
+    "definitions": {
+        "DeleteUserReq": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Delete User Req"
+        }
+    }
+}
