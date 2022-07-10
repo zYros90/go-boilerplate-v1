@@ -1,4 +1,3 @@
-
 proto:
 	$(eval OUT_PATH=./api/v1/generated)
 	$(eval THIRD_PARTY=./api/third_party)

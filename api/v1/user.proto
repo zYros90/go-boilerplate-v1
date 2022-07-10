@@ -4,6 +4,7 @@ package api.user.v1;
 
 import "google/protobuf/timestamp.proto";
 import "validate/validate.proto";
+import "jsonschema/jsonschema.proto";
 option go_package = "github.com/zYros90/go-boilerplate-v1/api/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.user.v1;";
@@ -16,6 +17,8 @@ service UserSvc {
 }
 
 message CreateUserReq {
+  option (protoc.gen.jsonschema.message_options)
+      .disallow_additional_properties = true;
   string username = 1 [ (validate.rules).string.min_len = 3 ];
   string password = 2 [ (validate.rules).string.min_len = 3 ];
   string email = 3 [ (validate.rules).string.email = true ];
