@@ -7,8 +7,8 @@
 package v1
 
 import (
-	_ "./protos"
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
+	_ "github.com/zYros90/go-boilerplate-v1/api/third_party/jsonschema"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"

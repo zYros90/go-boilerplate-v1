@@ -3,9 +3,9 @@
 // See https://github.com/protocolbuffers/protobuf/blob/master/docs/options.md
 
 syntax = "proto3";
-package protoc.gen.jsonschema;
+package jsonschema;
 import "google/protobuf/descriptor.proto";
-option go_package = "./protos";
+option go_package = "github.com/zYros90/go-boilerplate-v1/api/third_party/jsonschema;jsonschema";
 
 // Custom FieldOptions
 message FieldOptions {

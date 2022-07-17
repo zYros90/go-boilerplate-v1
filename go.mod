@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	entgo.io/ent v0.9.1
+	github.com/chrusty/protoc-gen-jsonschema v0.0.0-20220629194945-fb6570fd61fb
 	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/labstack/echo/v4 v4.7.2
 	github.com/lib/pq v1.10.4

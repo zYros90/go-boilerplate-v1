@@ -1,20 +1,37 @@
-proto:
-	$(eval OUT_PATH=./api/v1/generated)
+proto-jsonschema:
+	$(eval OUT_GO=./api/third_party/jsonschema)
 	$(eval THIRD_PARTY=./api/third_party)
-	$(eval PROTO_PATH=./api/v1)
-	$(eval SCHEMAS_PATH=./api/v1/generated/schemas)
+	$(eval PROTO_PATH=./api/third_party/jsonschema)
 
-	@mkdir -p $(OUT_PATH)
-	@mkdir -p $(SCHEMAS_PATH)
+	@mkdir -p $(OUT_GO)
 
 	@protoc \
 		--proto_path=$(PROTO_PATH) \
 		--proto_path=$(THIRD_PARTY) \
 		--proto_path=/usr/local/include \
-		--go_out=paths=source_relative:$(OUT_PATH) \
-		--go-grpc_out=paths=source_relative:$(OUT_PATH) \
-		--validate_out=paths=source_relative,lang=go:$(OUT_PATH) \
-		--jsonschema_out=source_relative:$(SCHEMAS_PATH) \
+		--go_out=paths=source_relative:$(OUT_GO) \
+		$(PROTO_PATH)/*.proto
+
+proto:
+	$(eval OUT_GO=./api/v1/generated)
+	$(eval THIRD_PARTY=./api/third_party)
+	$(eval PROTO_PATH=./api/v1)
+	$(eval OUT_SCHEMAS=./api/v1/generated_schemas)
+	$(eval OUT_DART=./api/v1/generated_dart)
+
+	@mkdir -p $(OUT_GO)
+	@mkdir -p $(OUT_DART)
+	@mkdir -p $(OUT_SCHEMAS)
+
+	@protoc \
+		--proto_path=$(PROTO_PATH) \
+		--proto_path=$(THIRD_PARTY) \
+		--proto_path=/usr/local/include \
+		--go_out=paths=source_relative:$(OUT_GO) \
+		--go-grpc_out=paths=source_relative:$(OUT_GO) \
+		--validate_out=paths=source_relative,lang=go:$(OUT_GO) \
+		--jsonschema_out=source_relative:$(OUT_SCHEMAS) \
+		--dart_out=$(OUT_DART) \
 		$(PROTO_PATH)/*.proto
 
 docker:

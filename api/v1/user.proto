@@ -17,8 +17,7 @@ service UserSvc {
 }
 
 message CreateUserReq {
-  option (protoc.gen.jsonschema.message_options)
-      .disallow_additional_properties = true;
+  option (jsonschema.message_options).disallow_additional_properties = true;
   string username = 1 [ (validate.rules).string.min_len = 3 ];
   string password = 2 [ (validate.rules).string.min_len = 3 ];
   string email = 3 [ (validate.rules).string.email = true ];
