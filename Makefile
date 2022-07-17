@@ -1,6 +1,6 @@
 proto-jsonschema:
-	$(eval OUT_GO=./api/third_party/jsonschema)
 	$(eval THIRD_PARTY=./api/third_party)
+	$(eval OUT_GO=./api/third_party/jsonschema)
 	$(eval PROTO_PATH=./api/third_party/jsonschema)
 
 	@mkdir -p $(OUT_GO)
@@ -13,9 +13,9 @@ proto-jsonschema:
 		$(PROTO_PATH)/*.proto
 
 proto:
-	$(eval OUT_GO=./api/v1/generated)
-	$(eval THIRD_PARTY=./api/third_party)
 	$(eval PROTO_PATH=./api/v1)
+	$(eval THIRD_PARTY=./api/third_party)
+	$(eval OUT_GO=./api/v1/generated)
 	$(eval OUT_SCHEMAS=./api/v1/generated_schemas)
 	$(eval OUT_DART=./api/v1/generated_dart)
 
