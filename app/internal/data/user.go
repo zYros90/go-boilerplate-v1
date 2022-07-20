@@ -39,7 +39,7 @@ func (repo *User) Create(ctx context.Context, usrBiz *biz.User) (*biz.User, erro
 	if err != nil {
 		rErr := tx.Rollback()
 		if rErr != nil {
-			repo.logger.Sugar().Error(err)
+			repo.logger.Sugar().Error(rErr)
 		}
 
 		return nil, err
@@ -68,7 +68,7 @@ func (repo *User) Update(ctx context.Context, usrBiz *biz.User) (*biz.User, erro
 	if err != nil {
 		rErr := tx.Rollback()
 		if rErr != nil {
-			repo.logger.Sugar().Error(err)
+			repo.logger.Sugar().Error(rErr)
 		}
 
 		return nil, err
@@ -91,7 +91,7 @@ func (repo *User) Get(ctx context.Context, username string) (*biz.User, error) {
 	if err != nil {
 		rErr := tx.Rollback()
 		if rErr != nil {
-			repo.logger.Sugar().Error(err)
+			repo.logger.Sugar().Error(rErr)
 		}
 
 		return nil, err
@@ -124,7 +124,7 @@ func (repo *User) Delete(ctx context.Context, username string) error {
 	if err != nil {
 		rErr := tx.Rollback()
 		if rErr != nil {
-			repo.logger.Sugar().Error(err)
+			repo.logger.Sugar().Error(rErr)
 		}
 
 		return err
