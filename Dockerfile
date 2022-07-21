@@ -15,7 +15,7 @@ ARG BINARY_NAME
 
 WORKDIR /src
 COPY --from=builder /build/${BINARY_NAME} .
-COPY --from=builder /build/app/config/dev.yaml dev.yaml
+COPY --from=builder /build/app/config/base.yaml base.yaml
 
 CMD ./${BINARY_NAME} run \
-    --config ./dev.yaml
+    --config ./base.yaml
