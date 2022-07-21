@@ -18,6 +18,7 @@ import (
 const (
 	dbConnTimeout   = 10 * time.Second
 	cacheExpireTime = 10 * time.Minute
+	cacheKeyPrefix  = "cache"
 )
 
 type Data struct {
