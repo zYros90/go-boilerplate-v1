@@ -1,7 +1,10 @@
 package data
 
 import (
+	"bytes"
 	"context"
+	"encoding/gob"
+	"strings"
 
 	"github.com/pkg/errors"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/biz"
@@ -47,6 +50,7 @@ func (repo *User) Create(ctx context.Context, usrBiz *biz.User) (*biz.User, erro
 	usrBiz.CreatedAt = item.CreatedAt
 	usrBiz.UpdatedAt = item.UpdatedAt
 
+	repo.cacheUsr(ctx, usrBiz)
 	return usrBiz, tx.Commit()
 }
 
@@ -73,10 +77,23 @@ func (repo *User) Update(ctx context.Context, usrBiz *biz.User) (*biz.User, erro
 		return nil, err
 	}
 
+	repo.cacheUsr(ctx, usrBiz)
 	return usrBiz, tx.Commit()
 }
 
 func (repo *User) Get(ctx context.Context, username string) (*biz.User, error) {
+	cachedUsrBiz, err := repo.getCachedUsr(ctx, username)
+	if err != nil {
+		if !strings.Contains(err.Error(), "redis: nil") {
+			repo.logger.Sugar().Error(err)
+		} else {
+			repo.logger.Sugar().Debug("redis nil")
+		}
+	} else {
+		repo.logger.Sugar().Debug("return from cache")
+		return cachedUsrBiz, nil
+	}
+
 	tx, err := repo.data.ent.Tx(ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "error getting transaction client")
@@ -106,6 +123,7 @@ func (repo *User) Get(ctx context.Context, username string) (*biz.User, error) {
 		UpdatedAt: item.UpdatedAt,
 	}
 
+	repo.cacheUsr(ctx, usrBiz)
 	return usrBiz, tx.Commit()
 }
 
@@ -128,6 +146,54 @@ func (repo *User) Delete(ctx context.Context, username string) error {
 
 		return err
 	}
-
+	err = repo.delCachedUsr(ctx, username)
+	if err != nil {
+		repo.logger.Sugar().Error(err)
+	}
 	return tx.Commit()
+}
+
+func (repo *User) cacheUsr(ctx context.Context, usrBiz *biz.User) {
+	// set in redis
+	var buf bytes.Buffer
+	enc := gob.NewEncoder(&buf)
+	err := enc.Encode(usrBiz)
+	if err != nil {
+		repo.logger.Sugar().Error("error encoding usrBiz. ", err)
+		return
+	}
+
+	err = repo.data.redis.Set(ctx, usrKey(usrBiz.Username), buf.Bytes(), cacheExpireTime).Err()
+	if err != nil {
+		repo.logger.Sugar().Error("error setting key", err)
+	}
+	repo.logger.Sugar().Debug("cached user successfully")
+}
+
+func (repo *User) getCachedUsr(ctx context.Context, username string) (*biz.User, error) {
+	cachedUsr, err := repo.data.redis.Get(ctx, usrKey(username)).Bytes()
+	if err != nil {
+		return nil, err
+	}
+
+	// set in redis
+	usrBuf := bytes.NewReader(cachedUsr)
+	dec := gob.NewDecoder(usrBuf)
+
+	var usrBiz biz.User
+	err = dec.Decode(&usrBiz)
+	if err != nil {
+		return nil, errors.Wrap(err, "error decoding cached usr")
+	}
+	return &usrBiz, nil
+}
+
+func (repo *User) delCachedUsr(ctx context.Context, username string) error {
+	err := repo.data.redis.Del(ctx, usrKey(username)).Err()
+	if err != nil {
+		if !strings.Contains(err.Error(), "redis: nil") {
+			return errors.Wrap(err, "error deleting key")
+		}
+	}
+	return nil
 }

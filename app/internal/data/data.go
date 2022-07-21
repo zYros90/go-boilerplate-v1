@@ -15,7 +15,10 @@ import (
 	"github.com/zYros90/pkg/logger"
 )
 
-const dbConnTimeout = 10 * time.Second
+const (
+	dbConnTimeout   = 10 * time.Second
+	cacheExpireTime = 10 * time.Minute
+)
 
 type Data struct {
 	ent   *ent.Client
