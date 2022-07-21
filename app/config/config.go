@@ -18,6 +18,12 @@ type PG struct {
 	Auth   Auth   `mapstructure:"auth"`
 }
 
+type Redis struct {
+	Host string `mapstructure:"host"`
+	Auth Auth   `mapstructure:"auth"`
+	DB   int    `mapstructure:"db"` // default db
+}
+
 type Server struct {
 	Host         string   `mapstructure:"host"`
 	Port         int      `mapstructure:"port"`
@@ -30,6 +36,7 @@ type Config struct {
 	LogLevel string `mapstructure:"log_level"`
 	Server   Server `mapstructure:"server"`
 	PG       PG     `mapstructure:"pg"`
+	Redis    Redis  `mapstructure:"redis"`
 }
 
 // ReadConfig reads base config and merges config if overwritePath is givven.

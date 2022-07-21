@@ -5,6 +5,7 @@ go 1.18
 require (
 	entgo.io/ent v0.9.1
 	github.com/envoyproxy/protoc-gen-validate v0.1.0
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/labstack/echo/v4 v4.7.2
 	github.com/lib/pq v1.10.4
 	github.com/pkg/errors v0.9.1
@@ -17,7 +18,9 @@ require (
 )
 
 require (
+	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang/protobuf v1.5.2 // indirect

@@ -49,7 +49,7 @@ func init() { // nolint:gochecknoinits
 }
 
 func startApp(conf *config.Config, logger *logger.Log) error {
-	// init db
+	// init data layer
 	db, err := data.New(logger, conf)
 	if err != nil {
 		return err

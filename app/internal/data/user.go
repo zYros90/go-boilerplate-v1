@@ -5,26 +5,25 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/biz"
-	"github.com/zYros90/go-boilerplate-v1/app/internal/data/ent"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/data/ent/user"
 	"github.com/zYros90/pkg/logger"
 	"go.uber.org/zap"
 )
 
 type User struct {
-	db     *ent.Client
+	data   *Data
 	logger *zap.Logger
 }
 
-func NewUser(db *ent.Client, logger *logger.Log) *User {
+func NewUser(data *Data, logger *logger.Log) *User {
 	return &User{
-		db:     db,
+		data:   data,
 		logger: logger.Logger,
 	}
 }
 
 func (repo *User) Create(ctx context.Context, usrBiz *biz.User) (*biz.User, error) {
-	tx, err := repo.db.Tx(ctx)
+	tx, err := repo.data.ent.Tx(ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "error getting transaction client")
 	}
@@ -52,7 +51,7 @@ func (repo *User) Create(ctx context.Context, usrBiz *biz.User) (*biz.User, erro
 }
 
 func (repo *User) Update(ctx context.Context, usrBiz *biz.User) (*biz.User, error) {
-	tx, err := repo.db.Tx(ctx)
+	tx, err := repo.data.ent.Tx(ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "error getting transaction client")
 	}
@@ -78,7 +77,7 @@ func (repo *User) Update(ctx context.Context, usrBiz *biz.User) (*biz.User, erro
 }
 
 func (repo *User) Get(ctx context.Context, username string) (*biz.User, error) {
-	tx, err := repo.db.Tx(ctx)
+	tx, err := repo.data.ent.Tx(ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "error getting transaction client")
 	}
@@ -111,7 +110,7 @@ func (repo *User) Get(ctx context.Context, username string) (*biz.User, error) {
 }
 
 func (repo *User) Delete(ctx context.Context, username string) error {
-	tx, err := repo.db.Tx(ctx)
+	tx, err := repo.data.ent.Tx(ctx)
 	if err != nil {
 		return errors.Wrap(err, "error getting transaction client")
 	}
