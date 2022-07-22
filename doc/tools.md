@@ -12,6 +12,7 @@ https://github.com/google/protobuf.dart/tree/master/protoc_plugin#how-to-build-a
 ```
 dart pub global activate protoc_plugin
 ```
+put `export PATH=$PATH:$HOME/.pub-cache/bin` in ~/.zshrc
 
  # set protoc options in vscode
  preferences > settings > vscode-proto3 configuration

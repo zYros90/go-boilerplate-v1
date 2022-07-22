@@ -9,18 +9,16 @@ import (
 )
 
 // User holds the schema definition for the User entity.
-type User struct {
+type Todo struct {
 	ent.Schema
 }
 
 // Fields of the User.
-func (User) Fields() []ent.Field {
+func (Todo) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("username").NotEmpty().Unique(),
-		field.String("password").NotEmpty(),
-		field.String("email").NotEmpty().Unique(),
-		field.String("first_name").Default(""),
-		field.String("last_name").Default(""),
+		field.String("todo").NotEmpty(),
+		field.Time("due_at").Optional(),
+		field.Time("notify_at").Optional(),
 		field.Time("created_at").
 			Immutable().
 			Default(time.Now),
@@ -31,8 +29,8 @@ func (User) Fields() []ent.Field {
 }
 
 // Edges of the User.
-func (User) Edges() []ent.Edge {
+func (Todo) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("todos", Todo.Type),
+		edge.From("users", User.Type).Ref("todos").Unique(),
 	}
 }
