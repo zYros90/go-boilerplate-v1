@@ -4,14 +4,13 @@ import (
 	"fmt"
 
 	"github.com/pkg/errors"
+	"github.com/spf13/cobra"
 	"github.com/zYros90/go-boilerplate-v1/app/config"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/biz"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/data"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/server"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/service"
 	"github.com/zYros90/pkg/logger"
-
-	"github.com/spf13/cobra"
 )
 
 // ErrMsg is used by unit test from runCmd.
