@@ -3,6 +3,7 @@ package data
 import (
 	"context"
 	"strings"
+	"time"
 
 	"github.com/pkg/errors"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/biz"
@@ -30,7 +31,7 @@ func (repo *Todo) Create(ctx context.Context, todoBiz *biz.Todo) (*biz.Todo, err
 	}
 
 	item, err := tx.Todo.Create().
-		SetTodoID(todoBiz.Todo).
+		SetTodoID(todoBiz.TodoID).
 		SetTodo(todoBiz.Todo).
 		SetNillableDueAt(&todoBiz.DueAt).
 		SetNillableNotifyAt(&todoBiz.NotifyAt).
@@ -62,6 +63,7 @@ func (repo *Todo) Update(ctx context.Context, todoBiz *biz.Todo) (*biz.Todo, err
 		SetTodo(todoBiz.Todo).
 		SetNillableDueAt(&todoBiz.DueAt).
 		SetNillableNotifyAt(&todoBiz.NotifyAt).
+		SetUpdatedAt(time.Now()).
 		Save(ctx)
 
 	if err != nil {
@@ -130,7 +132,7 @@ func (repo *Todo) Delete(ctx context.Context, todoID string) error {
 
 	_, err = tx.Todo.Delete().
 		Where(
-			todo.TodoEQ(todoID),
+			todo.TodoIDEQ(todoID),
 		).
 		Exec(ctx)
 	if err != nil {
@@ -141,6 +143,7 @@ func (repo *Todo) Delete(ctx context.Context, todoID string) error {
 
 		return err
 	}
+
 	err = repo.delCachedTodo(ctx, todoID)
 	if err != nil {
 		repo.logger.Sugar().Error(err)

@@ -2,6 +2,8 @@ package biz
 
 import (
 	"context"
+	"fmt"
+	"hash/crc64"
 	"time"
 
 	"github.com/pkg/errors"
@@ -44,6 +46,8 @@ func NewTodoUsecase(repo TodoRepo, logger *zap.Logger, conf *config.Config) *Tod
 }
 
 func (biz *TodoBiz) Create(ctx context.Context, todo *Todo) (*Todo, error) {
+	todoID := createTodoID()
+	todo.TodoID = todoID
 	// create in data layer
 	todo, err := biz.repo.Create(ctx, todo)
 	if err != nil {
@@ -73,11 +77,22 @@ func (biz *TodoBiz) Get(ctx context.Context, todoID string) (*Todo, error) {
 	return todo, nil
 }
 
-func (biz *TodoBiz) Delete(ctx context.Context, username string) error {
-	err := biz.repo.Delete(ctx, username)
+func (biz *TodoBiz) Delete(ctx context.Context, todoID string) error {
+	err := biz.repo.Delete(ctx, todoID)
 	if err != nil {
-		return errors.Wrap(err, "error deleting todo: "+username)
+		return errors.Wrap(err, "error deleting todo: "+todoID)
 	}
 
 	return nil
+}
+
+func createTodoID() string {
+	hash := CreateHash(fmt.Sprintf("%d", time.Now().UnixNano()))
+	return fmt.Sprintf("todo-%s", hash)
+}
+
+func CreateHash(in string) string { // TODO move to pkg
+	table := crc64.MakeTable(crc64.ECMA)
+	checksum := crc64.Checksum([]byte(in), table)
+	return fmt.Sprintf("%x", checksum)
 }

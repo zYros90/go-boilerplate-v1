@@ -204,6 +204,186 @@ var _ interface {
 	ErrorName() string
 } = CreateTodoReqValidationError{}
 
+// Validate checks the field values on UpdateTodoReq with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *UpdateTodoReq) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpdateTodoReq with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in UpdateTodoReqMultiError, or
+// nil if none found.
+func (m *UpdateTodoReq) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpdateTodoReq) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetTodoId()) < 1 {
+		err := UpdateTodoReqValidationError{
+			field:  "TodoId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetTodo()) < 1 {
+		err := UpdateTodoReqValidationError{
+			field:  "Todo",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetDueAt()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, UpdateTodoReqValidationError{
+					field:  "DueAt",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, UpdateTodoReqValidationError{
+					field:  "DueAt",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetDueAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UpdateTodoReqValidationError{
+				field:  "DueAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetNotifyAt()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, UpdateTodoReqValidationError{
+					field:  "NotifyAt",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, UpdateTodoReqValidationError{
+					field:  "NotifyAt",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetNotifyAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UpdateTodoReqValidationError{
+				field:  "NotifyAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return UpdateTodoReqMultiError(errors)
+	}
+
+	return nil
+}
+
+// UpdateTodoReqMultiError is an error wrapping multiple validation errors
+// returned by UpdateTodoReq.ValidateAll() if the designated constraints
+// aren't met.
+type UpdateTodoReqMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpdateTodoReqMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpdateTodoReqMultiError) AllErrors() []error { return m }
+
+// UpdateTodoReqValidationError is the validation error returned by
+// UpdateTodoReq.Validate if the designated constraints aren't met.
+type UpdateTodoReqValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateTodoReqValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateTodoReqValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateTodoReqValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateTodoReqValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateTodoReqValidationError) ErrorName() string { return "UpdateTodoReqValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UpdateTodoReqValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateTodoReq.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateTodoReqValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateTodoReqValidationError{}
+
 // Validate checks the field values on DeleteTodoReq with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.

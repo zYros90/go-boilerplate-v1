@@ -29,3 +29,14 @@ func parseTodoCreateReq(todoReq *pb.CreateTodoReq) *biz.Todo {
 		UpdatedAt: time.Time{},
 	}
 }
+
+func parseTodoUpdateReq(todoReq *pb.UpdateTodoReq) *biz.Todo {
+	return &biz.Todo{
+		TodoID:    todoReq.TodoId,
+		Todo:      todoReq.Todo,
+		DueAt:     todoReq.DueAt.AsTime(),
+		NotifyAt:  todoReq.NotifyAt.AsTime(),
+		CreatedAt: time.Time{},
+		UpdatedAt: time.Time{},
+	}
+}

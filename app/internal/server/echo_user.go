@@ -87,7 +87,7 @@ func (srv *Server) UpdateUser(c echo.Context) error {
 
 // GetUser endpoint.
 func (srv *Server) GetUser(c echo.Context) error {
-	username, ok := c.Get("username").(string)
+	username, ok := c.Get(usernameKeyEchoCtx).(string)
 	if !ok {
 		srv.logger.Sugar().Warn("no key <username> found in context")
 
@@ -126,7 +126,7 @@ func (srv *Server) GetUser(c echo.Context) error {
 
 // DeleteUser User endpoint.
 func (srv *Server) DeleteUser(c echo.Context) error {
-	username, ok := c.Get("username").(string)
+	username, ok := c.Get(usernameKeyEchoCtx).(string)
 	if !ok {
 		srv.logger.Sugar().Warn("no key <username> found in context")
 

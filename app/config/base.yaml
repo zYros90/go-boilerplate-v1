@@ -4,6 +4,7 @@ server:
   host: 127.0.0.0
   port: 9090
   jwtSecret: thisismysecretkey
+  jwt_expire_in_mins: 509760
   allow_origins:
     - "http://localhost:3000"
 

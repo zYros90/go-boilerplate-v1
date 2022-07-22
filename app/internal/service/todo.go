@@ -8,6 +8,7 @@ import (
 
 // CreateTodo endpoint.
 func (svc *Service) CreateTodo(c *srvctx.Ctx, req *pb.CreateTodoReq) (*pb.TodoResp, error) {
+	// parse to biz model
 	todo := parseTodoCreateReq(req)
 
 	// create todo
@@ -23,9 +24,9 @@ func (svc *Service) CreateTodo(c *srvctx.Ctx, req *pb.CreateTodoReq) (*pb.TodoRe
 }
 
 // UpdateTodo endpoint.
-func (svc *Service) UpdateTodo(c *srvctx.Ctx, req *pb.CreateTodoReq) (*pb.TodoResp, error) {
+func (svc *Service) UpdateTodo(c *srvctx.Ctx, req *pb.UpdateTodoReq) (*pb.TodoResp, error) {
 	// parse to biz model
-	todo := parseTodoCreateReq(req)
+	todo := parseTodoUpdateReq(req)
 
 	// create todo
 	todo, err := svc.bizTodo.Update(c, todo)
@@ -41,7 +42,7 @@ func (svc *Service) UpdateTodo(c *srvctx.Ctx, req *pb.CreateTodoReq) (*pb.TodoRe
 
 // GetTodo endpoint.
 func (svc *Service) GetTodo(c *srvctx.Ctx, req *pb.GetTodoReq) (*pb.TodoResp, error) {
-	todo, err := svc.bizTodo.Get(c, c.Username)
+	todo, err := svc.bizTodo.Get(c, req.TodoId)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +55,7 @@ func (svc *Service) GetTodo(c *srvctx.Ctx, req *pb.GetTodoReq) (*pb.TodoResp, er
 
 // DeleteTodo User endpoint.
 func (svc *Service) DeleteTodo(c *srvctx.Ctx, req *pb.DeleteTodoReq) (*emptypb.Empty, error) {
-	err := svc.bizTodo.Delete(c, c.Username)
+	err := svc.bizTodo.Delete(c, req.TodoId)
 	if err != nil {
 		return nil, err
 	}

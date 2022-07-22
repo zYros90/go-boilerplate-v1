@@ -40,5 +40,6 @@ func (biz *LoginBiz) Login(ctx context.Context, username string, password string
 	}
 
 	// create token
-	return jwt.GenerateJWTHS256(biz.conf.Server.JWTSecret, map[string]string{"username": user.Username}, 1*time.Hour)
+	expire := time.Duration(biz.conf.Server.JWTExpire) * time.Minute
+	return jwt.GenerateJWTHS256(biz.conf.Server.JWTSecret, map[string]string{"username": user.Username}, expire)
 }

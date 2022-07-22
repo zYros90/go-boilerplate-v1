@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -12,7 +13,13 @@ import (
 	"go.uber.org/zap"
 )
 
-var timeOut = 5 * time.Second
+const (
+	timeOut = 5 * time.Second
+
+	todoIDParam = "todo_id"
+
+	usernameKeyEchoCtx = "username"
+)
 
 type SrvError struct {
 	Error string `json:"error"`
@@ -73,7 +80,14 @@ func (srv *Server) register() {
 	user.GET("", srv.GetUser, jwtMW)
 	user.DELETE("", srv.DeleteUser, jwtMW)
 
-	// login
+	// LOGIN
 	login := srv.echoSrv.Group("/login/v1")
 	login.POST("", srv.Login)
+
+	// TODO
+	todo := srv.echoSrv.Group("/todo/v1")
+	todo.POST("", srv.CreateTodo, jwtMW)
+	todo.PUT("", srv.UpdateTodo, jwtMW)
+	todo.GET(fmt.Sprintf("/:%s", todoIDParam), srv.GetTodo, jwtMW)
+	todo.DELETE(fmt.Sprintf("/:%s", todoIDParam), srv.DeleteTodo, jwtMW)
 }

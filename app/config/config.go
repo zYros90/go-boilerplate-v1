@@ -28,6 +28,7 @@ type Server struct {
 	Host         string   `mapstructure:"host"`
 	Port         int      `mapstructure:"port"`
 	JWTSecret    string   `mapstructure:"jwtSecret"`
+	JWTExpire    int64    `mapstructure:"jwt_expire_in_mins"`
 	AllowOrigins []string `mapstructure:"allow_origins"`
 }
 

@@ -25,6 +25,14 @@ message CreateTodoReq {
   google.protobuf.Timestamp notify_at = 3;
 }
 
+message UpdateTodoReq {
+  option (jsonschema.message_options).disallow_additional_properties = true;
+  string todo_id = 1 [ (validate.rules).string.min_len = 1 ];
+  string todo = 2 [ (validate.rules).string.min_len = 1 ];
+  google.protobuf.Timestamp due_at = 3;
+  google.protobuf.Timestamp notify_at = 4;
+}
+
 message DeleteTodoReq {
   string todo_id = 1 [ (validate.rules).string.min_len = 1 ];
 }

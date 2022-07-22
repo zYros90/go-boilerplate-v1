@@ -24,6 +24,20 @@ const CreateTodoReq$json = const {
 
 /// Descriptor for `CreateTodoReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List createTodoReqDescriptor = $convert.base64Decode('Cg1DcmVhdGVUb2RvUmVxEhsKBHRvZG8YASABKAlCB/pCBHICEAFSBHRvZG8SMQoGZHVlX2F0GAIgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIFZHVlQXQSNwoJbm90aWZ5X2F0GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcFIIbm90aWZ5QXQ6BbpGAiAB');
+@$core.Deprecated('Use updateTodoReqDescriptor instead')
+const UpdateTodoReq$json = const {
+  '1': 'UpdateTodoReq',
+  '2': const [
+    const {'1': 'todo_id', '3': 1, '4': 1, '5': 9, '8': const {}, '10': 'todoId'},
+    const {'1': 'todo', '3': 2, '4': 1, '5': 9, '8': const {}, '10': 'todo'},
+    const {'1': 'due_at', '3': 3, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'dueAt'},
+    const {'1': 'notify_at', '3': 4, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'notifyAt'},
+  ],
+  '7': const {},
+};
+
+/// Descriptor for `UpdateTodoReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List updateTodoReqDescriptor = $convert.base64Decode('Cg1VcGRhdGVUb2RvUmVxEiAKB3RvZG9faWQYASABKAlCB/pCBHICEAFSBnRvZG9JZBIbCgR0b2RvGAIgASgJQgf6QgRyAhABUgR0b2RvEjEKBmR1ZV9hdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSBWR1ZUF0EjcKCW5vdGlmeV9hdBgEIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBSCG5vdGlmeUF0OgW6RgIgAQ==');
 @$core.Deprecated('Use deleteTodoReqDescriptor instead')
 const DeleteTodoReq$json = const {
   '1': 'DeleteTodoReq',

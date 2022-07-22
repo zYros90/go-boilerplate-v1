@@ -92,6 +92,99 @@ class CreateTodoReq extends $pb.GeneratedMessage {
   $1.Timestamp ensureNotifyAt() => $_ensure(2);
 }
 
+class UpdateTodoReq extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateTodoReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'api.user.v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'todoId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'todo')
+    ..aOM<$1.Timestamp>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dueAt', subBuilder: $1.Timestamp.create)
+    ..aOM<$1.Timestamp>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'notifyAt', subBuilder: $1.Timestamp.create)
+    ..hasRequiredFields = false
+  ;
+
+  UpdateTodoReq._() : super();
+  factory UpdateTodoReq({
+    $core.String? todoId,
+    $core.String? todo,
+    $1.Timestamp? dueAt,
+    $1.Timestamp? notifyAt,
+  }) {
+    final _result = create();
+    if (todoId != null) {
+      _result.todoId = todoId;
+    }
+    if (todo != null) {
+      _result.todo = todo;
+    }
+    if (dueAt != null) {
+      _result.dueAt = dueAt;
+    }
+    if (notifyAt != null) {
+      _result.notifyAt = notifyAt;
+    }
+    return _result;
+  }
+  factory UpdateTodoReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UpdateTodoReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UpdateTodoReq clone() => UpdateTodoReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UpdateTodoReq copyWith(void Function(UpdateTodoReq) updates) => super.copyWith((message) => updates(message as UpdateTodoReq)) as UpdateTodoReq; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UpdateTodoReq create() => UpdateTodoReq._();
+  UpdateTodoReq createEmptyInstance() => create();
+  static $pb.PbList<UpdateTodoReq> createRepeated() => $pb.PbList<UpdateTodoReq>();
+  @$core.pragma('dart2js:noInline')
+  static UpdateTodoReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateTodoReq>(create);
+  static UpdateTodoReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get todoId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set todoId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTodoId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTodoId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get todo => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set todo($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTodo() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTodo() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $1.Timestamp get dueAt => $_getN(2);
+  @$pb.TagNumber(3)
+  set dueAt($1.Timestamp v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDueAt() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDueAt() => clearField(3);
+  @$pb.TagNumber(3)
+  $1.Timestamp ensureDueAt() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $1.Timestamp get notifyAt => $_getN(3);
+  @$pb.TagNumber(4)
+  set notifyAt($1.Timestamp v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasNotifyAt() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearNotifyAt() => clearField(4);
+  @$pb.TagNumber(4)
+  $1.Timestamp ensureNotifyAt() => $_ensure(3);
+}
+
 class DeleteTodoReq extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteTodoReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'api.user.v1'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'todoId')

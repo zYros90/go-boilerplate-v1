@@ -19,18 +19,3 @@ func (svc *Service) Login(c *srvctx.Ctx, req *pb.LoginReq) (*pb.LoginResp, error
 
 	return resp, nil
 }
-
-// // Login endpoint.
-// func (svc *Service) Login(c context.Context, req *pb.LoginReq) (*pb.LoginResp, error) {
-// 	// check password and get token
-// 	token, err := svc.bizLogin.Login(c, req.GetUsername(), req.GetPassword())
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	resp := &pb.LoginResp{
-// 		Token: token,
-// 	}
-
-// 	return resp, nil
-// }

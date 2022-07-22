@@ -11,7 +11,7 @@ import (
 
 // CreateTodo endpoint.
 func (srv *Server) CreateTodo(c echo.Context) error {
-	username, ok := c.Get("username").(string)
+	username, ok := c.Get(usernameKeyEchoCtx).(string)
 	if !ok {
 		srv.logger.Sugar().Warn("no key <username> found in context")
 
@@ -56,7 +56,7 @@ func (srv *Server) CreateTodo(c echo.Context) error {
 
 // UpdateTodo endpoint.
 func (srv *Server) UpdateTodo(c echo.Context) error {
-	username, ok := c.Get("username").(string)
+	username, ok := c.Get(usernameKeyEchoCtx).(string)
 	if !ok {
 		srv.logger.Sugar().Warn("no key <username> found in context")
 
@@ -64,7 +64,7 @@ func (srv *Server) UpdateTodo(c echo.Context) error {
 	}
 
 	// bind user request
-	req := new(pb.CreateTodoReq)
+	req := new(pb.UpdateTodoReq)
 	err := c.Bind(req)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, &SrvError{err.Error()})
@@ -100,14 +100,14 @@ func (srv *Server) UpdateTodo(c echo.Context) error {
 
 // GetTodo endpoint.
 func (srv *Server) GetTodo(c echo.Context) error {
-	username, ok := c.Get("username").(string)
+	username, ok := c.Get(usernameKeyEchoCtx).(string)
 	if !ok {
 		srv.logger.Sugar().Warn("no key <username> found in context")
 
 		return c.JSON(http.StatusMethodNotAllowed, "invalid token")
 	}
 
-	todoID := c.Param("todo-id")
+	todoID := c.Param(todoIDParam)
 
 	req := &pb.GetTodoReq{
 		TodoId: todoID,
@@ -143,13 +143,17 @@ func (srv *Server) GetTodo(c echo.Context) error {
 
 // DeleteTodo Todo endpoint.
 func (srv *Server) DeleteTodo(c echo.Context) error {
-	username, ok := c.Get("username").(string)
+	username, ok := c.Get(usernameKeyEchoCtx).(string)
 	if !ok {
 		srv.logger.Sugar().Warn("no key <username> found in context")
 
 		return c.JSON(http.StatusMethodNotAllowed, "invalid token")
 	}
-	req := &pb.DeleteTodoReq{}
+
+	todoID := c.Param(todoIDParam)
+	req := &pb.DeleteTodoReq{
+		TodoId: todoID,
+	}
 
 	// validate proto
 	err := req.Validate()
