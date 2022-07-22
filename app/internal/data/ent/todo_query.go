@@ -291,12 +291,12 @@ func (tq *TodoQuery) WithUsers(opts ...func(*UserQuery)) *TodoQuery {
 // Example:
 //
 //	var v []struct {
-//		Todo string `json:"todo,omitempty"`
+//		TodoID string `json:"todo_id,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Todo.Query().
-//		GroupBy(todo.FieldTodo).
+//		GroupBy(todo.FieldTodoID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -320,11 +320,11 @@ func (tq *TodoQuery) GroupBy(field string, fields ...string) *TodoGroupBy {
 // Example:
 //
 //	var v []struct {
-//		Todo string `json:"todo,omitempty"`
+//		TodoID string `json:"todo_id,omitempty"`
 //	}
 //
 //	client.Todo.Query().
-//		Select(todo.FieldTodo).
+//		Select(todo.FieldTodoID).
 //		Scan(ctx, &v)
 //
 func (tq *TodoQuery) Select(fields ...string) *TodoSelect {

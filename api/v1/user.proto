@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.user.v1;
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 import "validate/validate.proto";
 import "jsonschema/jsonschema.proto";
@@ -20,7 +21,7 @@ service UserSvc {
 
   rpc Update(CreateUserReq) returns (UserResp) {}
   rpc Get(GetUserReq) returns (UserResp) {}
-  rpc Delete(DeleteUserReq) returns (DeleteUserResp) {}
+  rpc Delete(DeleteUserReq) returns (google.protobuf.Empty) {}
 }
 
 message CreateUserReq {
@@ -33,7 +34,6 @@ message CreateUserReq {
 }
 
 message DeleteUserReq {}
-message DeleteUserResp {}
 
 message GetUserReq {}
 

@@ -11,6 +11,8 @@ const (
 	Label = "todo"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldTodoID holds the string denoting the todo_id field in the database.
+	FieldTodoID = "todo_id"
 	// FieldTodo holds the string denoting the todo field in the database.
 	FieldTodo = "todo"
 	// FieldDueAt holds the string denoting the due_at field in the database.
@@ -37,6 +39,7 @@ const (
 // Columns holds all SQL columns for todo fields.
 var Columns = []string{
 	FieldID,
+	FieldTodoID,
 	FieldTodo,
 	FieldDueAt,
 	FieldNotifyAt,

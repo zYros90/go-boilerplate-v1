@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package api.user.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "jsonschema/jsonschema.proto";
+option go_package = "github.com/zYros90/go-boilerplate-v1/api/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.user.v1;";
+
+service TodoSvc {
+  rpc Create(CreateTodoReq) returns (TodoResp) {};
+  rpc Update(CreateTodoReq) returns (TodoResp) {}
+  rpc Get(GetTodoReq) returns (TodoResp) {}
+  rpc Delete(DeleteTodoReq) returns (google.protobuf.Empty) {}
+}
+
+message CreateTodoReq {
+  option (jsonschema.message_options).disallow_additional_properties = true;
+  string todo = 1 [ (validate.rules).string.min_len = 1 ];
+  google.protobuf.Timestamp due_at = 2;
+  google.protobuf.Timestamp notify_at = 3;
+}
+
+message DeleteTodoReq {
+  string todo_id = 1 [ (validate.rules).string.min_len = 1 ];
+}
+
+message GetTodoReq {}
+
+message TodoResp {
+  string todo_id = 1 [ (validate.rules).string.min_len = 1 ];
+  string todo = 2 [ (validate.rules).string.min_len = 1 ];
+  google.protobuf.Timestamp due_at = 3;
+  google.protobuf.Timestamp notify_at = 4;
+  google.protobuf.Timestamp created_at = 5
+      [ (validate.rules).timestamp.required = true ];
+  google.protobuf.Timestamp updated_at = 6
+      [ (validate.rules).timestamp.required = true ];
+}

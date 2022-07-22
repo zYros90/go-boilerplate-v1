@@ -3,6 +3,7 @@ package service
 import (
 	pb "github.com/zYros90/go-boilerplate-v1/api/v1/generated"
 	"github.com/zYros90/pkg/srvctx"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 // CreateUser endpoint.
@@ -52,13 +53,11 @@ func (svc *Service) GetUser(c *srvctx.Ctx, req *pb.GetUserReq) (*pb.UserResp, er
 }
 
 // DeleteUser User endpoint.
-func (svc *Service) DeleteUser(c *srvctx.Ctx, req *pb.DeleteUserReq) (*pb.DeleteUserResp, error) {
+func (svc *Service) DeleteUser(c *srvctx.Ctx, req *pb.DeleteUserReq) (*emptypb.Empty, error) {
 	err := svc.bizUsr.Delete(c, c.Username)
 	if err != nil {
 		return nil, err
 	}
 
-	resp := &pb.DeleteUserResp{}
-
-	return resp, nil
+	return &emptypb.Empty{}, nil
 }

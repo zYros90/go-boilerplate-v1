@@ -77,7 +77,7 @@ func (biz *UserBiz) Update(ctx context.Context, usr *User) (*User, error) {
 	// update in data layer
 	user, err := biz.repo.Update(ctx, usr)
 	if err != nil {
-		return nil, errors.Wrap(err, "error creating new user")
+		return nil, errors.Wrap(err, "error updating new user")
 	}
 
 	return user, nil
@@ -93,7 +93,6 @@ func (biz *UserBiz) Get(ctx context.Context, username string) (*User, error) {
 	return user, nil
 }
 
-// Delete deletes user.
 func (biz *UserBiz) Delete(ctx context.Context, username string) error {
 	err := biz.repo.Delete(ctx, username)
 	if err != nil {

@@ -81,6 +81,13 @@ func IDLTE(id int) predicate.Todo {
 	})
 }
 
+// TodoID applies equality check predicate on the "todo_id" field. It's identical to TodoIDEQ.
+func TodoID(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTodoID), v))
+	})
+}
+
 // Todo applies equality check predicate on the "todo" field. It's identical to TodoEQ.
 func Todo(v string) predicate.Todo {
 	return predicate.Todo(func(s *sql.Selector) {
@@ -113,6 +120,117 @@ func CreatedAt(v time.Time) predicate.Todo {
 func UpdatedAt(v time.Time) predicate.Todo {
 	return predicate.Todo(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldUpdatedAt), v))
+	})
+}
+
+// TodoIDEQ applies the EQ predicate on the "todo_id" field.
+func TodoIDEQ(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldTodoID), v))
+	})
+}
+
+// TodoIDNEQ applies the NEQ predicate on the "todo_id" field.
+func TodoIDNEQ(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldTodoID), v))
+	})
+}
+
+// TodoIDIn applies the In predicate on the "todo_id" field.
+func TodoIDIn(vs ...string) predicate.Todo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Todo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldTodoID), v...))
+	})
+}
+
+// TodoIDNotIn applies the NotIn predicate on the "todo_id" field.
+func TodoIDNotIn(vs ...string) predicate.Todo {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Todo(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldTodoID), v...))
+	})
+}
+
+// TodoIDGT applies the GT predicate on the "todo_id" field.
+func TodoIDGT(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldTodoID), v))
+	})
+}
+
+// TodoIDGTE applies the GTE predicate on the "todo_id" field.
+func TodoIDGTE(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldTodoID), v))
+	})
+}
+
+// TodoIDLT applies the LT predicate on the "todo_id" field.
+func TodoIDLT(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldTodoID), v))
+	})
+}
+
+// TodoIDLTE applies the LTE predicate on the "todo_id" field.
+func TodoIDLTE(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldTodoID), v))
+	})
+}
+
+// TodoIDContains applies the Contains predicate on the "todo_id" field.
+func TodoIDContains(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldTodoID), v))
+	})
+}
+
+// TodoIDHasPrefix applies the HasPrefix predicate on the "todo_id" field.
+func TodoIDHasPrefix(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldTodoID), v))
+	})
+}
+
+// TodoIDHasSuffix applies the HasSuffix predicate on the "todo_id" field.
+func TodoIDHasSuffix(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldTodoID), v))
+	})
+}
+
+// TodoIDEqualFold applies the EqualFold predicate on the "todo_id" field.
+func TodoIDEqualFold(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldTodoID), v))
+	})
+}
+
+// TodoIDContainsFold applies the ContainsFold predicate on the "todo_id" field.
+func TodoIDContainsFold(v string) predicate.Todo {
+	return predicate.Todo(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldTodoID), v))
 	})
 }
 

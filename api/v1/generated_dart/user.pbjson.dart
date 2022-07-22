@@ -9,6 +9,7 @@ import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
 import 'google/protobuf/timestamp.pbjson.dart' as $1;
+import 'google/protobuf/empty.pbjson.dart' as $2;
 
 @$core.Deprecated('Use createUserReqDescriptor instead')
 const CreateUserReq$json = const {
@@ -32,13 +33,6 @@ const DeleteUserReq$json = const {
 
 /// Descriptor for `DeleteUserReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deleteUserReqDescriptor = $convert.base64Decode('Cg1EZWxldGVVc2VyUmVx');
-@$core.Deprecated('Use deleteUserRespDescriptor instead')
-const DeleteUserResp$json = const {
-  '1': 'DeleteUserResp',
-};
-
-/// Descriptor for `DeleteUserResp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List deleteUserRespDescriptor = $convert.base64Decode('Cg5EZWxldGVVc2VyUmVzcA==');
 @$core.Deprecated('Use getUserReqDescriptor instead')
 const GetUserReq$json = const {
   '1': 'GetUserReq',
@@ -67,7 +61,7 @@ const $core.Map<$core.String, $core.dynamic> UserSvcServiceBase$json = const {
     const {'1': 'Create', '2': '.api.user.v1.CreateUserReq', '3': '.api.user.v1.UserResp', '4': const {}},
     const {'1': 'Update', '2': '.api.user.v1.CreateUserReq', '3': '.api.user.v1.UserResp', '4': const {}},
     const {'1': 'Get', '2': '.api.user.v1.GetUserReq', '3': '.api.user.v1.UserResp', '4': const {}},
-    const {'1': 'Delete', '2': '.api.user.v1.DeleteUserReq', '3': '.api.user.v1.DeleteUserResp', '4': const {}},
+    const {'1': 'Delete', '2': '.api.user.v1.DeleteUserReq', '3': '.google.protobuf.Empty', '4': const {}},
   ],
 };
 
@@ -78,8 +72,8 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> UserSvcSer
   '.google.protobuf.Timestamp': $1.Timestamp$json,
   '.api.user.v1.GetUserReq': GetUserReq$json,
   '.api.user.v1.DeleteUserReq': DeleteUserReq$json,
-  '.api.user.v1.DeleteUserResp': DeleteUserResp$json,
+  '.google.protobuf.Empty': $2.Empty$json,
 };
 
 /// Descriptor for `UserSvc`. Decode as a `google.protobuf.ServiceDescriptorProto`.
-final $typed_data.Uint8List userSvcServiceDescriptor = $convert.base64Decode('CgdVc2VyU3ZjElAKBkNyZWF0ZRIaLmFwaS51c2VyLnYxLkNyZWF0ZVVzZXJSZXEaFS5hcGkudXNlci52MS5Vc2VyUmVzcCITgtPkkwINIggvdXNlci92MToBKhI9CgZVcGRhdGUSGi5hcGkudXNlci52MS5DcmVhdGVVc2VyUmVxGhUuYXBpLnVzZXIudjEuVXNlclJlc3AiABI3CgNHZXQSFy5hcGkudXNlci52MS5HZXRVc2VyUmVxGhUuYXBpLnVzZXIudjEuVXNlclJlc3AiABJDCgZEZWxldGUSGi5hcGkudXNlci52MS5EZWxldGVVc2VyUmVxGhsuYXBpLnVzZXIudjEuRGVsZXRlVXNlclJlc3AiAA==');
+final $typed_data.Uint8List userSvcServiceDescriptor = $convert.base64Decode('CgdVc2VyU3ZjElAKBkNyZWF0ZRIaLmFwaS51c2VyLnYxLkNyZWF0ZVVzZXJSZXEaFS5hcGkudXNlci52MS5Vc2VyUmVzcCITgtPkkwINIggvdXNlci92MToBKhI9CgZVcGRhdGUSGi5hcGkudXNlci52MS5DcmVhdGVVc2VyUmVxGhUuYXBpLnVzZXIudjEuVXNlclJlc3AiABI3CgNHZXQSFy5hcGkudXNlci52MS5HZXRVc2VyUmVxGhUuYXBpLnVzZXIudjEuVXNlclJlc3AiABI+CgZEZWxldGUSGi5hcGkudXNlci52MS5EZWxldGVVc2VyUmVxGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgA=');

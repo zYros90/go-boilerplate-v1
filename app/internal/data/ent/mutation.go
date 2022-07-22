@@ -35,6 +35,7 @@ type TodoMutation struct {
 	op            Op
 	typ           string
 	id            *int
+	todo_id       *string
 	todo          *string
 	due_at        *time.Time
 	notify_at     *time.Time
@@ -144,6 +145,42 @@ func (m *TodoMutation) IDs(ctx context.Context) ([]int, error) {
 	default:
 		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
 	}
+}
+
+// SetTodoID sets the "todo_id" field.
+func (m *TodoMutation) SetTodoID(s string) {
+	m.todo_id = &s
+}
+
+// TodoID returns the value of the "todo_id" field in the mutation.
+func (m *TodoMutation) TodoID() (r string, exists bool) {
+	v := m.todo_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTodoID returns the old "todo_id" field's value of the Todo entity.
+// If the Todo object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *TodoMutation) OldTodoID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTodoID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTodoID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTodoID: %w", err)
+	}
+	return oldValue.TodoID, nil
+}
+
+// ResetTodoID resets all changes to the "todo_id" field.
+func (m *TodoMutation) ResetTodoID() {
+	m.todo_id = nil
 }
 
 // SetTodo sets the "todo" field.
@@ -410,7 +447,10 @@ func (m *TodoMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *TodoMutation) Fields() []string {
-	fields := make([]string, 0, 5)
+	fields := make([]string, 0, 6)
+	if m.todo_id != nil {
+		fields = append(fields, todo.FieldTodoID)
+	}
 	if m.todo != nil {
 		fields = append(fields, todo.FieldTodo)
 	}
@@ -434,6 +474,8 @@ func (m *TodoMutation) Fields() []string {
 // schema.
 func (m *TodoMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case todo.FieldTodoID:
+		return m.TodoID()
 	case todo.FieldTodo:
 		return m.Todo()
 	case todo.FieldDueAt:
@@ -453,6 +495,8 @@ func (m *TodoMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *TodoMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case todo.FieldTodoID:
+		return m.OldTodoID(ctx)
 	case todo.FieldTodo:
 		return m.OldTodo(ctx)
 	case todo.FieldDueAt:
@@ -472,6 +516,13 @@ func (m *TodoMutation) OldField(ctx context.Context, name string) (ent.Value, er
 // type.
 func (m *TodoMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case todo.FieldTodoID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTodoID(v)
+		return nil
 	case todo.FieldTodo:
 		v, ok := value.(string)
 		if !ok {
@@ -571,6 +622,9 @@ func (m *TodoMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *TodoMutation) ResetField(name string) error {
 	switch name {
+	case todo.FieldTodoID:
+		m.ResetTodoID()
+		return nil
 	case todo.FieldTodo:
 		m.ResetTodo()
 		return nil

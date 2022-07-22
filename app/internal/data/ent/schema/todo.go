@@ -16,6 +16,7 @@ type Todo struct {
 // Fields of the User.
 func (Todo) Fields() []ent.Field {
 	return []ent.Field{
+		field.String("todo_id").NotEmpty().Unique(),
 		field.String("todo").NotEmpty(),
 		field.Time("due_at").Optional(),
 		field.Time("notify_at").Optional(),

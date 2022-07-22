@@ -10,33 +10,34 @@ import 'dart:async' as $async;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'dart:core' as $core;
-import 'user.pb.dart' as $2;
+import 'user.pb.dart' as $4;
+import 'google/protobuf/empty.pb.dart' as $2;
 import 'user.pbjson.dart';
 
 export 'user.pb.dart';
 
 abstract class UserSvcServiceBase extends $pb.GeneratedService {
-  $async.Future<$2.UserResp> create($pb.ServerContext ctx, $2.CreateUserReq request);
-  $async.Future<$2.UserResp> update($pb.ServerContext ctx, $2.CreateUserReq request);
-  $async.Future<$2.UserResp> get($pb.ServerContext ctx, $2.GetUserReq request);
-  $async.Future<$2.DeleteUserResp> delete($pb.ServerContext ctx, $2.DeleteUserReq request);
+  $async.Future<$4.UserResp> create($pb.ServerContext ctx, $4.CreateUserReq request);
+  $async.Future<$4.UserResp> update($pb.ServerContext ctx, $4.CreateUserReq request);
+  $async.Future<$4.UserResp> get($pb.ServerContext ctx, $4.GetUserReq request);
+  $async.Future<$2.Empty> delete($pb.ServerContext ctx, $4.DeleteUserReq request);
 
   $pb.GeneratedMessage createRequest($core.String method) {
     switch (method) {
-      case 'Create': return $2.CreateUserReq();
-      case 'Update': return $2.CreateUserReq();
-      case 'Get': return $2.GetUserReq();
-      case 'Delete': return $2.DeleteUserReq();
+      case 'Create': return $4.CreateUserReq();
+      case 'Update': return $4.CreateUserReq();
+      case 'Get': return $4.GetUserReq();
+      case 'Delete': return $4.DeleteUserReq();
       default: throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
   $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx, $core.String method, $pb.GeneratedMessage request) {
     switch (method) {
-      case 'Create': return this.create(ctx, request as $2.CreateUserReq);
-      case 'Update': return this.update(ctx, request as $2.CreateUserReq);
-      case 'Get': return this.get(ctx, request as $2.GetUserReq);
-      case 'Delete': return this.delete(ctx, request as $2.DeleteUserReq);
+      case 'Create': return this.create(ctx, request as $4.CreateUserReq);
+      case 'Update': return this.update(ctx, request as $4.CreateUserReq);
+      case 'Get': return this.get(ctx, request as $4.GetUserReq);
+      case 'Delete': return this.delete(ctx, request as $4.DeleteUserReq);
       default: throw $core.ArgumentError('Unknown method: $method');
     }
   }

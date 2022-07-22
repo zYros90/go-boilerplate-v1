@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -25,7 +26,7 @@ type UserSvcClient interface {
 	Create(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*UserResp, error)
 	Update(ctx context.Context, in *CreateUserReq, opts ...grpc.CallOption) (*UserResp, error)
 	Get(ctx context.Context, in *GetUserReq, opts ...grpc.CallOption) (*UserResp, error)
-	Delete(ctx context.Context, in *DeleteUserReq, opts ...grpc.CallOption) (*DeleteUserResp, error)
+	Delete(ctx context.Context, in *DeleteUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type userSvcClient struct {
@@ -63,8 +64,8 @@ func (c *userSvcClient) Get(ctx context.Context, in *GetUserReq, opts ...grpc.Ca
 	return out, nil
 }
 
-func (c *userSvcClient) Delete(ctx context.Context, in *DeleteUserReq, opts ...grpc.CallOption) (*DeleteUserResp, error) {
-	out := new(DeleteUserResp)
+func (c *userSvcClient) Delete(ctx context.Context, in *DeleteUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/api.user.v1.UserSvc/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -79,7 +80,7 @@ type UserSvcServer interface {
 	Create(context.Context, *CreateUserReq) (*UserResp, error)
 	Update(context.Context, *CreateUserReq) (*UserResp, error)
 	Get(context.Context, *GetUserReq) (*UserResp, error)
-	Delete(context.Context, *DeleteUserReq) (*DeleteUserResp, error)
+	Delete(context.Context, *DeleteUserReq) (*emptypb.Empty, error)
 	mustEmbedUnimplementedUserSvcServer()
 }
 
@@ -96,7 +97,7 @@ func (UnimplementedUserSvcServer) Update(context.Context, *CreateUserReq) (*User
 func (UnimplementedUserSvcServer) Get(context.Context, *GetUserReq) (*UserResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
-func (UnimplementedUserSvcServer) Delete(context.Context, *DeleteUserReq) (*DeleteUserResp, error) {
+func (UnimplementedUserSvcServer) Delete(context.Context, *DeleteUserReq) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (UnimplementedUserSvcServer) mustEmbedUnimplementedUserSvcServer() {}

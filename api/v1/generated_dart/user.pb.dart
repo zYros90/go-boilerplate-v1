@@ -11,6 +11,7 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'google/protobuf/timestamp.pb.dart' as $1;
+import 'google/protobuf/empty.pb.dart' as $2;
 
 class CreateUserReq extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CreateUserReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'api.user.v1'), createEmptyInstance: create)
@@ -142,35 +143,6 @@ class DeleteUserReq extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DeleteUserReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteUserReq>(create);
   static DeleteUserReq? _defaultInstance;
-}
-
-class DeleteUserResp extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteUserResp', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'api.user.v1'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
-
-  DeleteUserResp._() : super();
-  factory DeleteUserResp() => create();
-  factory DeleteUserResp.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory DeleteUserResp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  DeleteUserResp clone() => DeleteUserResp()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  DeleteUserResp copyWith(void Function(DeleteUserResp) updates) => super.copyWith((message) => updates(message as DeleteUserResp)) as DeleteUserResp; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static DeleteUserResp create() => DeleteUserResp._();
-  DeleteUserResp createEmptyInstance() => create();
-  static $pb.PbList<DeleteUserResp> createRepeated() => $pb.PbList<DeleteUserResp>();
-  @$core.pragma('dart2js:noInline')
-  static DeleteUserResp getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteUserResp>(create);
-  static DeleteUserResp? _defaultInstance;
 }
 
 class GetUserReq extends $pb.GeneratedMessage {
@@ -339,9 +311,9 @@ class UserSvcApi {
     var emptyResponse = UserResp();
     return _client.invoke<UserResp>(ctx, 'UserSvc', 'Get', request, emptyResponse);
   }
-  $async.Future<DeleteUserResp> delete($pb.ClientContext? ctx, DeleteUserReq request) {
-    var emptyResponse = DeleteUserResp();
-    return _client.invoke<DeleteUserResp>(ctx, 'UserSvc', 'Delete', request, emptyResponse);
+  $async.Future<$2.Empty> delete($pb.ClientContext? ctx, DeleteUserReq request) {
+    var emptyResponse = $2.Empty();
+    return _client.invoke<$2.Empty>(ctx, 'UserSvc', 'Delete', request, emptyResponse);
   }
 }
 

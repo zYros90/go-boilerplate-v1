@@ -11,6 +11,7 @@ var (
 	// TodosColumns holds the columns for the "todos" table.
 	TodosColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "todo_id", Type: field.TypeString, Unique: true},
 		{Name: "todo", Type: field.TypeString},
 		{Name: "due_at", Type: field.TypeTime, Nullable: true},
 		{Name: "notify_at", Type: field.TypeTime, Nullable: true},
@@ -26,7 +27,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "todos_users_todos",
-				Columns:    []*schema.Column{TodosColumns[6]},
+				Columns:    []*schema.Column{TodosColumns[7]},
 				RefColumns: []*schema.Column{UsersColumns[0]},
 				OnDelete:   schema.SetNull,
 			},

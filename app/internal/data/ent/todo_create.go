@@ -21,6 +21,12 @@ type TodoCreate struct {
 	hooks    []Hook
 }
 
+// SetTodoID sets the "todo_id" field.
+func (tc *TodoCreate) SetTodoID(s string) *TodoCreate {
+	tc.mutation.SetTodoID(s)
+	return tc
+}
+
 // SetTodo sets the "todo" field.
 func (tc *TodoCreate) SetTodo(s string) *TodoCreate {
 	tc.mutation.SetTodo(s)
@@ -191,6 +197,9 @@ func (tc *TodoCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (tc *TodoCreate) check() error {
+	if _, ok := tc.mutation.TodoID(); !ok {
+		return &ValidationError{Name: "todo_id", err: errors.New(`ent: missing required field "Todo.todo_id"`)}
+	}
 	if _, ok := tc.mutation.Todo(); !ok {
 		return &ValidationError{Name: "todo", err: errors.New(`ent: missing required field "Todo.todo"`)}
 	}
@@ -232,6 +241,14 @@ func (tc *TodoCreate) createSpec() (*Todo, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	if value, ok := tc.mutation.TodoID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: todo.FieldTodoID,
+		})
+		_node.TodoID = value
+	}
 	if value, ok := tc.mutation.Todo(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,

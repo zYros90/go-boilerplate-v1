@@ -29,6 +29,12 @@ func (tu *TodoUpdate) Where(ps ...predicate.Todo) *TodoUpdate {
 	return tu
 }
 
+// SetTodoID sets the "todo_id" field.
+func (tu *TodoUpdate) SetTodoID(s string) *TodoUpdate {
+	tu.mutation.SetTodoID(s)
+	return tu
+}
+
 // SetTodo sets the "todo" field.
 func (tu *TodoUpdate) SetTodo(s string) *TodoUpdate {
 	tu.mutation.SetTodo(s)
@@ -208,6 +214,13 @@ func (tu *TodoUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
+	if value, ok := tu.mutation.TodoID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: todo.FieldTodoID,
+		})
+	}
 	if value, ok := tu.mutation.Todo(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -300,6 +313,12 @@ type TodoUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *TodoMutation
+}
+
+// SetTodoID sets the "todo_id" field.
+func (tuo *TodoUpdateOne) SetTodoID(s string) *TodoUpdateOne {
+	tuo.mutation.SetTodoID(s)
+	return tuo
 }
 
 // SetTodo sets the "todo" field.
@@ -510,6 +529,13 @@ func (tuo *TodoUpdateOne) sqlSave(ctx context.Context) (_node *Todo, err error) 
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := tuo.mutation.TodoID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: todo.FieldTodoID,
+		})
 	}
 	if value, ok := tuo.mutation.Todo(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

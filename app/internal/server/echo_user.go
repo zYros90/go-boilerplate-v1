@@ -160,11 +160,11 @@ func (srv *Server) DeleteUser(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, &SrvError{err.Error()})
 	}
 
-	// validate proto
-	err = resp.Validate()
-	if err != nil {
-		return c.JSON(http.StatusBadRequest, &SrvError{err.Error()})
-	}
+	// // validate proto // info: no validation for emptypb.Empty{}
+	// err = resp.Validate()
+	// if err != nil {
+	// 	return c.JSON(http.StatusBadRequest, &SrvError{err.Error()})
+	// }
 
 	return c.JSON(http.StatusOK, resp)
 }
