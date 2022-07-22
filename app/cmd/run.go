@@ -56,13 +56,15 @@ func startApp(conf *config.Config, logger *logger.Log) error {
 
 	// init repos
 	usrRepo := data.NewUser(db, logger)
+	todoRepo := data.Newtodo(db, logger)
 
 	// init usecases
 	bizUsr := biz.NewUserUsecase(usrRepo, logger.Logger, conf)
 	bizLogin := biz.NewLoginUsecase(logger.Logger, conf, bizUsr)
+	bizTodo := biz.NewTodoUsecase(todoRepo, logger.Logger, conf)
 
 	// init service
-	svc := service.New(conf, logger.Logger, bizUsr, bizLogin)
+	svc := service.New(conf, logger.Logger, bizUsr, bizLogin, bizTodo)
 
 	// init server
 	srv, err := server.NewEcho(conf, logger.Logger, svc)

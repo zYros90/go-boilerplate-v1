@@ -47,7 +47,7 @@ func Test_newEcho(t *testing.T) {
 		},
 	}
 
-	svc := service.New(correctConfig, log.Logger, &biz.UserBiz{}, &biz.LoginBiz{})
+	svc := service.New(correctConfig, log.Logger, &biz.UserBiz{}, &biz.LoginBiz{}, &biz.TodoBiz{})
 
 	tests := []struct {
 		name    string

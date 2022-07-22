@@ -337,6 +337,17 @@ func (m *GetTodoReq) validate(all bool) error {
 
 	var errors []error
 
+	if utf8.RuneCountInString(m.GetTodoId()) < 1 {
+		err := GetTodoReqValidationError{
+			field:  "TodoId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return GetTodoReqMultiError(errors)
 	}

@@ -20,7 +20,9 @@ put `export PATH=$PATH:$HOME/.pub-cache/bin` in ~/.zshrc
 "protoc": {
     "options": [
         "--proto_path=./api/v1",
-        "--proto_path=./api/third_party"
+        "--proto_path=./api/third_party",
+        "--proto_path=./api/third_party/validate",
+        "--proto_path=./api/third_party/google"
     ]
 }
 ```

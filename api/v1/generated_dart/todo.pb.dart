@@ -141,11 +141,20 @@ class DeleteTodoReq extends $pb.GeneratedMessage {
 
 class GetTodoReq extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetTodoReq', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'api.user.v1'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'todoId')
     ..hasRequiredFields = false
   ;
 
   GetTodoReq._() : super();
-  factory GetTodoReq() => create();
+  factory GetTodoReq({
+    $core.String? todoId,
+  }) {
+    final _result = create();
+    if (todoId != null) {
+      _result.todoId = todoId;
+    }
+    return _result;
+  }
   factory GetTodoReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory GetTodoReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -166,6 +175,15 @@ class GetTodoReq extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static GetTodoReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetTodoReq>(create);
   static GetTodoReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get todoId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set todoId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTodoId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTodoId() => clearField(1);
 }
 
 class TodoResp extends $pb.GeneratedMessage {

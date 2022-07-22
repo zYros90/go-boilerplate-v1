@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -10,6 +11,12 @@ import (
 	"github.com/zYros90/pkg/echomw"
 	"go.uber.org/zap"
 )
+
+var timeOut = 5 * time.Second
+
+type SrvError struct {
+	Error string `json:"error"`
+}
 
 type Server struct {
 	echoSrv *echo.Echo

@@ -37,10 +37,13 @@ final $typed_data.Uint8List deleteTodoReqDescriptor = $convert.base64Decode('Cg1
 @$core.Deprecated('Use getTodoReqDescriptor instead')
 const GetTodoReq$json = const {
   '1': 'GetTodoReq',
+  '2': const [
+    const {'1': 'todo_id', '3': 1, '4': 1, '5': 9, '8': const {}, '10': 'todoId'},
+  ],
 };
 
 /// Descriptor for `GetTodoReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getTodoReqDescriptor = $convert.base64Decode('CgpHZXRUb2RvUmVx');
+final $typed_data.Uint8List getTodoReqDescriptor = $convert.base64Decode('CgpHZXRUb2RvUmVxEiAKB3RvZG9faWQYASABKAlCB/pCBHICEAFSBnRvZG9JZA==');
 @$core.Deprecated('Use todoRespDescriptor instead')
 const TodoResp$json = const {
   '1': 'TodoResp',

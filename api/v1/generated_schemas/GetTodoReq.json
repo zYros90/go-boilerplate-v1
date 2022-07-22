@@ -3,6 +3,11 @@
     "$ref": "#/definitions/GetTodoReq",
     "definitions": {
         "GetTodoReq": {
+            "properties": {
+                "todo_id": {
+                    "type": "string"
+                }
+            },
             "additionalProperties": true,
             "type": "object",
             "title": "Get Todo Req"

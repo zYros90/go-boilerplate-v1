@@ -9,10 +9,17 @@ import (
 	"github.com/zYros90/pkg/srvctx"
 )
 
-// CreateUser endpoint.
-func (srv *Server) CreateUser(c echo.Context) error {
+// CreateTodo endpoint.
+func (srv *Server) CreateTodo(c echo.Context) error {
+	username, ok := c.Get("username").(string)
+	if !ok {
+		srv.logger.Sugar().Warn("no key <username> found in context")
+
+		return c.JSON(http.StatusMethodNotAllowed, "invalid token")
+	}
+
 	// bind user request
-	req := new(pb.CreateUserReq)
+	req := new(pb.CreateTodoReq)
 
 	err := c.Bind(req)
 	if err != nil {
@@ -30,10 +37,10 @@ func (srv *Server) CreateUser(c echo.Context) error {
 	defer cancel()
 
 	// create server context
-	srvCtx := srvctx.New(ctx, req.Username)
+	srvCtx := srvctx.New(ctx, username)
 
 	// call svc
-	resp, err := srv.svc.CreateUser(srvCtx, req)
+	resp, err := srv.svc.CreateTodo(srvCtx, req)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, &SrvError{err.Error()})
 	}
@@ -47,11 +54,17 @@ func (srv *Server) CreateUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-// UpdateUser endpoint.
-func (srv *Server) UpdateUser(c echo.Context) error {
-	// bind user request
-	req := new(pb.CreateUserReq)
+// UpdateTodo endpoint.
+func (srv *Server) UpdateTodo(c echo.Context) error {
+	username, ok := c.Get("username").(string)
+	if !ok {
+		srv.logger.Sugar().Warn("no key <username> found in context")
 
+		return c.JSON(http.StatusMethodNotAllowed, "invalid token")
+	}
+
+	// bind user request
+	req := new(pb.CreateTodoReq)
 	err := c.Bind(req)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, &SrvError{err.Error()})
@@ -68,10 +81,10 @@ func (srv *Server) UpdateUser(c echo.Context) error {
 	defer cancel()
 
 	// create server context
-	srvCtx := srvctx.New(ctx, req.Username)
+	srvCtx := srvctx.New(ctx, username)
 
 	// call svc
-	resp, err := srv.svc.UpdateUser(srvCtx, req)
+	resp, err := srv.svc.UpdateTodo(srvCtx, req)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, &SrvError{err.Error()})
 	}
@@ -85,8 +98,8 @@ func (srv *Server) UpdateUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-// GetUser endpoint.
-func (srv *Server) GetUser(c echo.Context) error {
+// GetTodo endpoint.
+func (srv *Server) GetTodo(c echo.Context) error {
 	username, ok := c.Get("username").(string)
 	if !ok {
 		srv.logger.Sugar().Warn("no key <username> found in context")
@@ -94,7 +107,11 @@ func (srv *Server) GetUser(c echo.Context) error {
 		return c.JSON(http.StatusMethodNotAllowed, "invalid token")
 	}
 
-	req := &pb.GetUserReq{}
+	todoID := c.Param("todo-id")
+
+	req := &pb.GetTodoReq{
+		TodoId: todoID,
+	}
 
 	// validate proto
 	err := req.Validate()
@@ -110,7 +127,7 @@ func (srv *Server) GetUser(c echo.Context) error {
 	srvCtx := srvctx.New(ctx, username)
 
 	// call svc
-	resp, err := srv.svc.GetUser(srvCtx, req)
+	resp, err := srv.svc.GetTodo(srvCtx, req)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, &SrvError{err.Error()})
 	}
@@ -124,15 +141,15 @@ func (srv *Server) GetUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-// DeleteUser User endpoint.
-func (srv *Server) DeleteUser(c echo.Context) error {
+// DeleteTodo Todo endpoint.
+func (srv *Server) DeleteTodo(c echo.Context) error {
 	username, ok := c.Get("username").(string)
 	if !ok {
 		srv.logger.Sugar().Warn("no key <username> found in context")
 
 		return c.JSON(http.StatusMethodNotAllowed, "invalid token")
 	}
-	req := &pb.DeleteUserReq{}
+	req := &pb.DeleteTodoReq{}
 
 	// validate proto
 	err := req.Validate()
@@ -148,7 +165,7 @@ func (srv *Server) DeleteUser(c echo.Context) error {
 	srvCtx := srvctx.New(ctx, username)
 
 	// call svc
-	resp, err := srv.svc.DeleteUser(srvCtx, req)
+	resp, err := srv.svc.DeleteTodo(srvCtx, req)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, &SrvError{err.Error()})
 	}

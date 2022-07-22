@@ -15,6 +15,7 @@ type Service struct {
 	conf     *config.Config
 	bizUsr   *biz.UserBiz
 	bizLogin *biz.LoginBiz
+	bizTodo  *biz.TodoBiz
 }
 
 // New create new service and registers routes.
@@ -23,12 +24,14 @@ func New(
 	logger *zap.Logger,
 	usrBiz *biz.UserBiz,
 	bizLogin *biz.LoginBiz,
+	bizTodo *biz.TodoBiz,
 ) *Service {
 	svc := &Service{
 		logger:   logger,
 		conf:     conf,
 		bizUsr:   usrBiz,
 		bizLogin: bizLogin,
+		bizTodo:  bizTodo,
 	}
 	return svc
 }

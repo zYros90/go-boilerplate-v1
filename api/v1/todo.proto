@@ -29,7 +29,9 @@ message DeleteTodoReq {
   string todo_id = 1 [ (validate.rules).string.min_len = 1 ];
 }
 
-message GetTodoReq {}
+message GetTodoReq {
+  string todo_id = 1 [ (validate.rules).string.min_len = 1 ];
+}
 
 message TodoResp {
   string todo_id = 1 [ (validate.rules).string.min_len = 1 ];
