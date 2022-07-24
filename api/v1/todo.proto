@@ -12,10 +12,28 @@ option java_multiple_files = true;
 option java_package = "api.user.v1;";
 
 service TodoSvc {
-  rpc Create(CreateTodoReq) returns (TodoResp) {};
-  rpc Update(CreateTodoReq) returns (TodoResp) {}
-  rpc Get(GetTodoReq) returns (TodoResp) {}
-  rpc Delete(DeleteTodoReq) returns (google.protobuf.Empty) {}
+  rpc Create(CreateTodoReq) returns (TodoResp) {
+    option (google.api.http) = {
+      post: "/todo/v1"
+      body: "*"
+    };
+  };
+  rpc Update(CreateTodoReq) returns (TodoResp) {
+    option (google.api.http) = {
+      put: "/todo/v1"
+      body: "*"
+    };
+  }
+  rpc Get(GetTodoReq) returns (TodoResp) {
+    option (google.api.http) = {
+      get: "/todo/v1"
+    };
+  }
+  rpc Delete(DeleteTodoReq) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/todo/v1"
+    };
+  }
 }
 
 message CreateTodoReq {
