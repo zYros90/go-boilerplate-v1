@@ -43,4 +43,4 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> LoginSvcSe
 };
 
 /// Descriptor for `LoginSvc`. Decode as a `google.protobuf.ServiceDescriptorProto`.
-final $typed_data.Uint8List loginSvcServiceDescriptor = $convert.base64Decode('CghMb2dpblN2YxI4CgVMb2dpbhIVLmFwaS51c2VyLnYxLkxvZ2luUmVxGhYuYXBpLnVzZXIudjEuTG9naW5SZXNwIgA=');
+final $typed_data.Uint8List loginSvcServiceDescriptor = $convert.base64Decode('CghMb2dpblN2YxJMCgVMb2dpbhIVLmFwaS51c2VyLnYxLkxvZ2luUmVxGhYuYXBpLnVzZXIudjEuTG9naW5SZXNwIhSC0+STAg4iCS9sb2dpbi92MToBKg==');

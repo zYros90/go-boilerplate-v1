@@ -91,3 +91,13 @@ func (srv *Server) register() {
 	todo.GET(fmt.Sprintf("/:%s", todoIDParam), srv.GetTodo, jwtMW)
 	todo.DELETE(fmt.Sprintf("/:%s", todoIDParam), srv.DeleteTodo, jwtMW)
 }
+
+type srvInterface interface {
+}
+
+// func RegisterUserEchoSvc(echoSrv *echo.Echo, ) {
+// 	echoSrv.POST("", srv.CreateUser)
+// 	echoSrv.PUT("", srv.UpdateUser, jwtMW)
+// 	echoSrv.GET("", srv.GetUser, jwtMW)
+// 	echoSrv.DELETE("", srv.DeleteUser, jwtMW)
+// }
