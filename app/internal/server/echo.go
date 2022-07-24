@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -76,22 +75,19 @@ func (srv *Server) register() {
 
 	_ = pbv1.CreateTodoReq{}
 	// USER
-	// user := srv.echoSrv.Group("/user/v1")
-	srv.echoSrv.POST("", srv.CreateUser)
-	srv.echoSrv.PUT("", srv.UpdateUser, jwtMW)
-	srv.echoSrv.GET("", srv.GetUser, jwtMW)
-	srv.echoSrv.DELETE("", srv.DeleteUser, jwtMW)
+	srv.echoSrv.POST(pbv1.UserSvc_Create_Path, srv.CreateUser)
+	srv.echoSrv.PUT(pbv1.UserSvc_Update_Path, srv.UpdateUser, jwtMW)
+	srv.echoSrv.GET(pbv1.UserSvc_Get_Path, srv.GetUser, jwtMW)
+	srv.echoSrv.DELETE(pbv1.UserSvc_Delete_Path, srv.DeleteUser, jwtMW)
 
 	// LOGIN
-	login := srv.echoSrv.Group("/login/v1")
-	login.POST("", srv.Login)
+	srv.echoSrv.POST(pbv1.LoginSvc_Login_Path, srv.Login)
 
 	// TODO
-	todo := srv.echoSrv.Group("/todo/v1")
-	todo.POST("", srv.CreateTodo, jwtMW)
-	todo.PUT("", srv.UpdateTodo, jwtMW)
-	todo.GET(fmt.Sprintf("/:%s", todoIDParam), srv.GetTodo, jwtMW)
-	todo.DELETE(fmt.Sprintf("/:%s", todoIDParam), srv.DeleteTodo, jwtMW)
+	srv.echoSrv.POST(pbv1.TodoSvc_Create_Path, srv.CreateTodo, jwtMW)
+	srv.echoSrv.PUT(pbv1.TodoSvc_Update_Path, srv.UpdateTodo, jwtMW)
+	srv.echoSrv.GET(pbv1.TodoSvc_Get_Path, srv.GetTodo, jwtMW)
+	srv.echoSrv.DELETE(pbv1.TodoSvc_Delete_Path, srv.DeleteTodo, jwtMW)
 }
 
 // func RegisterUserEchoSvc(echoSrv *echo.Echo, srv *Server) {

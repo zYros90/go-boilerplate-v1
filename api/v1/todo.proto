@@ -26,12 +26,12 @@ service TodoSvc {
   }
   rpc Get(GetTodoReq) returns (TodoResp) {
     option (google.api.http) = {
-      get: "/todo/v1"
+      get: "/todo/v1/:todo_id"
     };
   }
   rpc Delete(DeleteTodoReq) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/todo/v1"
+      delete: "/todo/v1/:todo_id"
     };
   }
 }
