@@ -1,14 +1,19 @@
 syntax = "proto3";
 
 package api.user.v1;
-
+import "google/api/annotations.proto";
 import "validate/validate.proto";
 option go_package = "github.com/zYros90/go-boilerplate-v1/api/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.user.v1;";
 
 service LoginSvc {
-  rpc Login(LoginReq) returns (LoginResp) {}
+  rpc Login(LoginReq) returns (LoginResp) {
+    option (google.api.http) = {
+      post: "/login/v1"
+      body: "*"
+    };
+  }
 }
 
 message LoginReq {
