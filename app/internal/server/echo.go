@@ -73,8 +73,9 @@ func (srv *Server) register() {
 
 	jwtMW := echomw.JWT(srv.conf.Server.JWTSecret)
 
-	_ = pbv1.CreateTodoReq{}
 	// USER
+	// srv.echoSrv.Add(pbv1.UserSvc_Create_Method, pbv1.UserSvc_Create_Path, srv.CreateUser) // alternative
+
 	srv.echoSrv.POST(pbv1.UserSvc_Create_Path, srv.CreateUser)
 	srv.echoSrv.PUT(pbv1.UserSvc_Update_Path, srv.UpdateUser, jwtMW)
 	srv.echoSrv.GET(pbv1.UserSvc_Get_Path, srv.GetUser, jwtMW)
