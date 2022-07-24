@@ -7,6 +7,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	pbv1 "github.com/zYros90/go-boilerplate-v1/api/v1/generated"
 	"github.com/zYros90/go-boilerplate-v1/app/config"
 	"github.com/zYros90/go-boilerplate-v1/app/internal/service"
 	"github.com/zYros90/pkg/echomw"
@@ -73,12 +74,13 @@ func (srv *Server) register() {
 
 	jwtMW := echomw.JWT(srv.conf.Server.JWTSecret)
 
+	_ = pbv1.CreateTodoReq{}
 	// USER
-	user := srv.echoSrv.Group("/user/v1")
-	user.POST("", srv.CreateUser)
-	user.PUT("", srv.UpdateUser, jwtMW)
-	user.GET("", srv.GetUser, jwtMW)
-	user.DELETE("", srv.DeleteUser, jwtMW)
+	// user := srv.echoSrv.Group("/user/v1")
+	srv.echoSrv.POST("", srv.CreateUser)
+	srv.echoSrv.PUT("", srv.UpdateUser, jwtMW)
+	srv.echoSrv.GET("", srv.GetUser, jwtMW)
+	srv.echoSrv.DELETE("", srv.DeleteUser, jwtMW)
 
 	// LOGIN
 	login := srv.echoSrv.Group("/login/v1")
@@ -92,10 +94,7 @@ func (srv *Server) register() {
 	todo.DELETE(fmt.Sprintf("/:%s", todoIDParam), srv.DeleteTodo, jwtMW)
 }
 
-type srvInterface interface {
-}
-
-// func RegisterUserEchoSvc(echoSrv *echo.Echo, ) {
+// func RegisterUserEchoSvc(echoSrv *echo.Echo, srv *Server) {
 // 	echoSrv.POST("", srv.CreateUser)
 // 	echoSrv.PUT("", srv.UpdateUser, jwtMW)
 // 	echoSrv.GET("", srv.GetUser, jwtMW)

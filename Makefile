@@ -30,7 +30,7 @@ proto:
 		--go_out=paths=source_relative:$(OUT_GO) \
 		--go-grpc_out=paths=source_relative:$(OUT_GO) \
 		--validate_out=paths=source_relative,lang=go:$(OUT_GO) \
-		--restapi_out=source_relative:$(OUT_GO) \
+		--restapi_out=paths=source_relative:$(OUT_GO) \
 		--jsonschema_out=source_relative:$(OUT_SCHEMAS) \
 		--dart_out=$(OUT_DART) \
 		$(PROTO_PATH)/*.proto
