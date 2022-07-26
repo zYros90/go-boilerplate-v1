@@ -10,8 +10,8 @@ option java_package = "api.user.v1;";
 service LoginSvc {
   rpc Login(LoginReq) returns (LoginResp) {
     option (google.api.http) = {
-      post: "/login/v1"
-      body: "*"
+      post : "/login/v1"
+      body : "*"
     };
   }
 }

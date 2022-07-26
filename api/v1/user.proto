@@ -14,24 +14,24 @@ option java_package = "api.user.v1;";
 service UserSvc {
   rpc Create(CreateUserReq) returns (UserResp) {
     option (google.api.http) = {
-      post: "/user/v1"
-      body: "*"
+      post : "/user/v1"
+      body : "*"
     };
   };
   rpc Update(CreateUserReq) returns (UserResp) {
     option (google.api.http) = {
-      put: "/user/v1"
-      body: "*"
+      put : "/user/v1"
+      body : "*"
     };
   }
   rpc Get(GetUserReq) returns (UserResp) {
     option (google.api.http) = {
-      get: "/user/v1"
+      get : "/user/v1"
     };
   }
   rpc Delete(DeleteUserReq) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/user/v1"
+      delete : "/user/v1"
     };
   }
 }

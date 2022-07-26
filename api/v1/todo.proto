@@ -14,24 +14,24 @@ option java_package = "api.user.v1;";
 service TodoSvc {
   rpc Create(CreateTodoReq) returns (TodoResp) {
     option (google.api.http) = {
-      post: "/todo/v1"
-      body: "*"
+      post : "/todo/v1"
+      body : "*"
     };
   };
   rpc Update(CreateTodoReq) returns (TodoResp) {
     option (google.api.http) = {
-      put: "/todo/v1"
-      body: "*"
+      put : "/todo/v1"
+      body : "*"
     };
   }
   rpc Get(GetTodoReq) returns (TodoResp) {
     option (google.api.http) = {
-      get: "/todo/v1/:todo_id"
+      get : "/todo/v1/:todo_id"
     };
   }
   rpc Delete(DeleteTodoReq) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      delete: "/todo/v1/:todo_id"
+      delete : "/todo/v1/:todo_id"
     };
   }
 }
