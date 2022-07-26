@@ -42,6 +42,9 @@ func NewEcho(
 	echoSrv.Use(middleware.Logger())
 	echoSrv.Use(middleware.Recover())
 
+	jwtMW := echomw.JWT(conf.Server.JWTSecret, []string{pbv1.UserSvc_Create_Path})
+	echoSrv.Use(jwtMW)
+
 	echoSrv.Use(middleware.CORSWithConfig(middleware.CORSConfig{ // nolint:exhaustruct
 		AllowOrigins: conf.Server.AllowOrigins,
 		AllowHeaders: []string{
@@ -71,29 +74,22 @@ func (srv *Server) Shutdown(ctx context.Context) error {
 
 func (srv *Server) register() {
 
-	jwtMW := echomw.JWT(srv.conf.Server.JWTSecret)
+	// for _, apiAnnotation := range apiAnnotations{ // For later use -> generate echo handler funcs with protoc
+	// 	srv.echoSrv.Add(pbv1.UserSvc_Create_Method, pbv1.UserSvc_Create_Path, srv.CreateUser)
+	// }
 
-	// USER
-	// srv.echoSrv.Add(pbv1.UserSvc_Create_Method, pbv1.UserSvc_Create_Path, srv.CreateUser) // alternative
-
+	// User
 	srv.echoSrv.POST(pbv1.UserSvc_Create_Path, srv.CreateUser)
-	srv.echoSrv.PUT(pbv1.UserSvc_Update_Path, srv.UpdateUser, jwtMW)
-	srv.echoSrv.GET(pbv1.UserSvc_Get_Path, srv.GetUser, jwtMW)
-	srv.echoSrv.DELETE(pbv1.UserSvc_Delete_Path, srv.DeleteUser, jwtMW)
+	srv.echoSrv.PUT(pbv1.UserSvc_Update_Path, srv.UpdateUser)
+	srv.echoSrv.GET(pbv1.UserSvc_Get_Path, srv.GetUser)
+	srv.echoSrv.DELETE(pbv1.UserSvc_Delete_Path, srv.DeleteUser)
 
-	// LOGIN
+	// Login
 	srv.echoSrv.POST(pbv1.LoginSvc_Login_Path, srv.Login)
 
-	// TODO
-	srv.echoSrv.POST(pbv1.TodoSvc_Create_Path, srv.CreateTodo, jwtMW)
-	srv.echoSrv.PUT(pbv1.TodoSvc_Update_Path, srv.UpdateTodo, jwtMW)
-	srv.echoSrv.GET(pbv1.TodoSvc_Get_Path, srv.GetTodo, jwtMW)
-	srv.echoSrv.DELETE(pbv1.TodoSvc_Delete_Path, srv.DeleteTodo, jwtMW)
+	// Todos
+	srv.echoSrv.POST(pbv1.TodoSvc_Create_Path, srv.CreateTodo)
+	srv.echoSrv.PUT(pbv1.TodoSvc_Update_Path, srv.UpdateTodo)
+	srv.echoSrv.GET(pbv1.TodoSvc_Get_Path, srv.GetTodo)
+	srv.echoSrv.DELETE(pbv1.TodoSvc_Delete_Path, srv.DeleteTodo)
 }
-
-// func RegisterUserEchoSvc(echoSrv *echo.Echo, srv *Server) {
-// 	echoSrv.POST("", srv.CreateUser)
-// 	echoSrv.PUT("", srv.UpdateUser, jwtMW)
-// 	echoSrv.GET("", srv.GetUser, jwtMW)
-// 	echoSrv.DELETE("", srv.DeleteUser, jwtMW)
-// }
