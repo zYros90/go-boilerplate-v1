@@ -2,11 +2,10 @@
 
 ## Todos
 features:
-* add TODO entity with tables, O2M edge
 * add prometheus
 * add graphql
-* add kafka client
-* add endpoint annotations to protobuf
+* add nats client
+* generate echo handler funcs with protoc-gen-restapi
 
 tests: 
 * add httptests
